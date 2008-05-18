@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AFD07A75-912E-4F74-BE5B-E6F21EE93B03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDocLinks", "GetDocLinks\GetDocLinks.csproj", "{EA9372AB-8795-414A-B897-F777A8833CF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Txt", "Html2Txt\Html2Txt.csproj", "{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Xml", "Html2Xml\Html2Xml.csproj", "{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Rss", "Html2Rss\Html2Rss.csproj", "{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs01.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = GetDocLinks\\GetDocLinks.csproj
+		SccProjectTopLevelParentUniqueName1 = HtmlAgilityPack.sln
+		SccProjectName1 = GetDocLinks
+		SccLocalPath1 = GetDocLinks
+		SccProjectUniqueName2 = Html2Rss\\Html2Rss.csproj
+		SccProjectTopLevelParentUniqueName2 = HtmlAgilityPack.sln
+		SccProjectName2 = Html2Rss
+		SccLocalPath2 = Html2Rss
+		SccProjectUniqueName3 = Html2Txt\\Html2Txt.csproj
+		SccProjectTopLevelParentUniqueName3 = HtmlAgilityPack.sln
+		SccProjectName3 = Html2Txt
+		SccLocalPath3 = Html2Txt
+		SccProjectUniqueName4 = Html2Xml\\Html2Xml.csproj
+		SccProjectTopLevelParentUniqueName4 = HtmlAgilityPack.sln
+		SccProjectName4 = Html2Xml
+		SccLocalPath4 = Html2Xml
+		SccProjectUniqueName5 = HtmlAgilityPack\\HtmlAgilityPack.csproj
+		SccProjectName5 = HtmlAgilityPack
+		SccLocalPath5 = HtmlAgilityPack
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193BB801-054F-4729-9D5D-FCE1E32594BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA9372AB-8795-414A-B897-F777A8833CF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA9372AB-8795-414A-B897-F777A8833CF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA9372AB-8795-414A-B897-F777A8833CF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA9372AB-8795-414A-B897-F777A8833CF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EA9372AB-8795-414A-B897-F777A8833CF4} = {AFD07A75-912E-4F74-BE5B-E6F21EE93B03}
+		{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38} = {AFD07A75-912E-4F74-BE5B-E6F21EE93B03}
+		{989D16BD-ED2A-47FA-BBB6-D1267892A3F0} = {AFD07A75-912E-4F74-BE5B-E6F21EE93B03}
+		{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95} = {AFD07A75-912E-4F74-BE5B-E6F21EE93B03}
+	EndGlobalSection
+EndGlobal
