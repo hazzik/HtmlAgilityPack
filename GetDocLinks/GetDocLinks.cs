@@ -25,6 +25,7 @@ namespace HtmlAgilityPack.Samples
 			{
 				Console.WriteLine(nwl.References[i]);
 			}
+            Console.ReadKey();
 		}
 	}
 
