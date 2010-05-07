@@ -19,14 +19,14 @@ using System.Security;
 [assembly: AssemblyProduct("Html Agility Pack")]
 [assembly:
     AssemblyCopyright(
-        "Copyright (C) 2003-2009 Simon Mourier <simon underscore mourier at hotmail dot com> All rights reserved.")]
+        "Copyright (C) 2003-20010 Simon Mourier <simon underscore mourier at hotmail dot com> All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("643622ea-d2aa-4572-a2b2-6202b7fcd83f")]
-[assembly: AssemblyVersion("1.3.9.1")]
-[assembly: AssemblyFileVersion("1.3.9.1")]
-[assembly: AssemblyInformationalVersion("1.3.9.1")]
+[assembly: AssemblyVersion("1.4.0.0")]
+[assembly: AssemblyFileVersion("1.4.0.0")]
+[assembly: AssemblyInformationalVersion("1.4.0.0")]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: AssemblyDelaySign(false)]
 
