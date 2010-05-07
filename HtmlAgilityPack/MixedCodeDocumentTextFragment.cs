@@ -1,6 +1,4 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -8,25 +6,27 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentTextFragment : MixedCodeDocumentFragment
     {
+        #region Constructors
+
         internal MixedCodeDocumentTextFragment(MixedCodeDocument doc)
             :
-            base(doc, MixedCodeDocumentFragmentType.Text)
+                base(doc, MixedCodeDocumentFragmentType.Text)
         {
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets the fragment text.
         /// </summary>
         public string Text
         {
-            get
-            {
-                return FragmentText;
-            }
-            set
-            {
-                base._fragmenttext = value;
-            }
+            get { return FragmentText; }
+            set { FragmentText = value; }
         }
+
+        #endregion
     }
 }

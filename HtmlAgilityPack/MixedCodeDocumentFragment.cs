@@ -1,6 +1,4 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -8,74 +6,40 @@ namespace HtmlAgilityPack
     /// </summary>
     public abstract class MixedCodeDocumentFragment
     {
-        internal MixedCodeDocumentFragmentType _type;
-        internal MixedCodeDocument _doc;
-        internal int _index;
-        internal int _length;
-        internal int _line;
+        #region Fields
+
+        internal MixedCodeDocument Doc;
+        private string _fragmentText;
+        internal int Index;
+        internal int Length;
+        private int _line;
         internal int _lineposition;
-        internal string _fragmenttext;
+        internal MixedCodeDocumentFragmentType _type;
+
+        #endregion
+
+        #region Constructors
 
         internal MixedCodeDocumentFragment(MixedCodeDocument doc, MixedCodeDocumentFragmentType type)
         {
-            _doc = doc;
+            Doc = doc;
             _type = type;
             switch (type)
             {
                 case MixedCodeDocumentFragmentType.Text:
-                    _doc._textfragments.Append(this);
+                    Doc._textfragments.Append(this);
                     break;
 
                 case MixedCodeDocumentFragmentType.Code:
-                    _doc._codefragments.Append(this);
+                    Doc._codefragments.Append(this);
                     break;
             }
-            _doc._fragments.Append(this);
+            Doc._fragments.Append(this);
         }
 
-        /// <summary>
-        /// Gets the type of fragment.
-        /// </summary>
-        public MixedCodeDocumentFragmentType FragmentType
-        {
-            get
-            {
-                return _type;
-            }
-        }
+        #endregion
 
-        /// <summary>
-        /// Gets the fragment position in the document's stream.
-        /// </summary>
-        public int StreamPosition
-        {
-            get
-            {
-                return _index;
-            }
-        }
-
-        /// <summary>
-        /// Gets the line number of the fragment.
-        /// </summary>
-        public int Line
-        {
-            get
-            {
-                return _line;
-            }
-        }
-
-        /// <summary>
-        /// Gets the line position (column) of the fragment.
-        /// </summary>
-        public int LinePosition
-        {
-            get
-            {
-                return _lineposition;
-            }
-        }
+        #region Properties
 
         /// <summary>
         /// Gets the fragement text.
@@ -84,12 +48,48 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_fragmenttext == null)
+                if (_fragmentText == null)
                 {
-                    _fragmenttext = _doc._text.Substring(_index, _length);
+                    _fragmentText = Doc._text.Substring(Index, Length);
                 }
-                return _fragmenttext;
+                return FragmentText;
             }
+            internal set { _fragmentText = value; }
         }
+
+        /// <summary>
+        /// Gets the type of fragment.
+        /// </summary>
+        public MixedCodeDocumentFragmentType FragmentType
+        {
+            get { return _type; }
+        }
+
+        /// <summary>
+        /// Gets the line number of the fragment.
+        /// </summary>
+        public int Line
+        {
+            get { return _line; }
+            internal set { _line = value; }
+        }
+
+        /// <summary>
+        /// Gets the line position (column) of the fragment.
+        /// </summary>
+        public int LinePosition
+        {
+            get { return _lineposition; }
+        }
+
+        /// <summary>
+        /// Gets the fragment position in the document's stream.
+        /// </summary>
+        public int StreamPosition
+        {
+            get { return Index; }
+        }
+
+        #endregion
     }
 }

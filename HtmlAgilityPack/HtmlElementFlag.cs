@@ -6,6 +6,7 @@ namespace HtmlAgilityPack
     /// <summary>
     /// Flags that describe the behavior of an Element node.
     /// </summary>
+    [Flags]
     public enum HtmlElementFlag
     {
         /// <summary>
@@ -28,5 +29,4 @@ namespace HtmlAgilityPack
         /// </summary>
         CanOverlap = 8
     }
-
 }

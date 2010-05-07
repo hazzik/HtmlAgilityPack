@@ -9,13 +9,63 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentFragmentList : IEnumerable
     {
+        #region Fields
+
         private MixedCodeDocument _doc;
         private ArrayList _items = new ArrayList();
+
+        #endregion
+
+        #region Constructors
 
         internal MixedCodeDocumentFragmentList(MixedCodeDocument doc)
         {
             _doc = doc;
         }
+
+        #endregion
+
+        #region Properties
+
+        ///<summary>
+        /// Gets the Document
+        ///</summary>
+        public MixedCodeDocument Doc
+        {
+            get { return _doc; }
+        }
+
+        /// <summary>
+        /// Gets the number of fragments contained in the list.
+        /// </summary>
+        public int Count
+        {
+            get { return _items.Count; }
+        }
+
+        /// <summary>
+        /// Gets a fragment from the list using its index.
+        /// </summary>
+        public MixedCodeDocumentFragment this[int index]
+        {
+            get { return _items[index] as MixedCodeDocumentFragment; }
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        /// <summary>
+        /// Gets an enumerator that can iterate through the fragment list.
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Appends a fragment to the list of fragments.
@@ -28,6 +78,14 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("newFragment");
             }
             _items.Add(newFragment);
+        }
+
+        /// <summary>
+        /// Gets an enumerator that can iterate through the fragment list.
+        /// </summary>
+        public MixedCodeDocumentFragmentEnumerator GetEnumerator()
+        {
+            return new MixedCodeDocumentFragmentEnumerator(_items);
         }
 
         /// <summary>
@@ -62,16 +120,6 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
-        /// Remove a fragment from the list of fragments, using its index in the list.
-        /// </summary>
-        /// <param name="index">The index of the fragment to remove.</param>
-        public void RemoveAt(int index)
-        {
-            MixedCodeDocumentFragment frag = (MixedCodeDocumentFragment)_items[index];
-            _items.RemoveAt(index);
-        }
-
-        /// <summary>
         /// Remove all fragments from the list.
         /// </summary>
         public void RemoveAll()
@@ -80,14 +128,22 @@ namespace HtmlAgilityPack
         }
 
         /// <summary>
-        /// Gets the number of fragments contained in the list.
+        /// Remove a fragment from the list of fragments, using its index in the list.
         /// </summary>
-        public int Count
+        /// <param name="index">The index of the fragment to remove.</param>
+        public void RemoveAt(int index)
         {
-            get
-            {
-                return _items.Count;
-            }
+            //MixedCodeDocumentFragment frag = (MixedCodeDocumentFragment) _items[index];
+            _items.RemoveAt(index);
+        }
+
+        #endregion
+
+        #region Internal Methods
+
+        internal void Clear()
+        {
+            _items.Clear();
         }
 
         internal int GetFragmentIndex(MixedCodeDocumentFragment fragment)
@@ -98,7 +154,7 @@ namespace HtmlAgilityPack
             }
             for (int i = 0; i < _items.Count; i++)
             {
-                if (((MixedCodeDocumentFragment)_items[i]) == fragment)
+                if ((_items[i]) == fragment)
                 {
                     return i;
                 }
@@ -106,45 +162,23 @@ namespace HtmlAgilityPack
             return -1;
         }
 
-        /// <summary>
-        /// Gets a fragment from the list using its index.
-        /// </summary>
-        public MixedCodeDocumentFragment this[int index]
-        {
-            get
-            {
-                return _items[index] as MixedCodeDocumentFragment;
-            }
-        }
+        #endregion
 
-        internal void Clear()
-        {
-            _items.Clear();
-        }
-
-        /// <summary>
-        /// Gets an enumerator that can iterate through the fragment list.
-        /// </summary>
-        public MixedCodeDocumentFragmentEnumerator GetEnumerator()
-        {
-            return new MixedCodeDocumentFragmentEnumerator(_items);
-        }
-
-        /// <summary>
-        /// Gets an enumerator that can iterate through the fragment list.
-        /// </summary>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        #region Nested type: MixedCodeDocumentFragmentEnumerator
 
         /// <summary>
         /// Represents a fragment enumerator.
         /// </summary>
         public class MixedCodeDocumentFragmentEnumerator : IEnumerator
         {
-            int _index;
-            ArrayList _items;
+            #region Fields
+
+            private int _index;
+            private ArrayList _items;
+
+            #endregion
+
+            #region Constructors
 
             internal MixedCodeDocumentFragmentEnumerator(ArrayList items)
             {
@@ -152,12 +186,28 @@ namespace HtmlAgilityPack
                 _index = -1;
             }
 
+            #endregion
+
+            #region Properties
+
             /// <summary>
-            /// Sets the enumerator to its initial position, which is before the first element in the collection.
+            /// Gets the current element in the collection.
             /// </summary>
-            public void Reset()
+            public MixedCodeDocumentFragment Current
             {
-                _index = -1;
+                get { return (MixedCodeDocumentFragment) (_items[_index]); }
+            }
+
+            #endregion
+
+            #region IEnumerator Members
+
+            /// <summary>
+            /// Gets the current element in the collection.
+            /// </summary>
+            object IEnumerator.Current
+            {
+                get { return (Current); }
             }
 
             /// <summary>
@@ -171,26 +221,16 @@ namespace HtmlAgilityPack
             }
 
             /// <summary>
-            /// Gets the current element in the collection.
+            /// Sets the enumerator to its initial position, which is before the first element in the collection.
             /// </summary>
-            public MixedCodeDocumentFragment Current
+            public void Reset()
             {
-                get
-                {
-                    return (MixedCodeDocumentFragment)(_items[_index]);
-                }
+                _index = -1;
             }
 
-            /// <summary>
-            /// Gets the current element in the collection.
-            /// </summary>
-            object IEnumerator.Current
-            {
-                get
-                {
-                    return (Current);
-                }
-            }
+            #endregion
         }
+
+        #endregion
     }
 }

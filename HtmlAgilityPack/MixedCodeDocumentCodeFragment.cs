@@ -1,6 +1,4 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -8,13 +6,23 @@ namespace HtmlAgilityPack
     /// </summary>
     public class MixedCodeDocumentCodeFragment : MixedCodeDocumentFragment
     {
-        internal string _code;
+        #region Fields
+
+        private string _code;
+
+        #endregion
+
+        #region Constructors
 
         internal MixedCodeDocumentCodeFragment(MixedCodeDocument doc)
             :
-            base(doc, MixedCodeDocumentFragmentType.Code)
+                base(doc, MixedCodeDocumentFragmentType.Code)
         {
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Gets the fragment code text.
@@ -25,19 +33,19 @@ namespace HtmlAgilityPack
             {
                 if (_code == null)
                 {
-                    _code = FragmentText.Substring(_doc.TokenCodeStart.Length,
-                        FragmentText.Length - _doc.TokenCodeEnd.Length - _doc.TokenCodeStart.Length - 1).Trim();
+                    _code = FragmentText.Substring(Doc.TokenCodeStart.Length,
+                                                   FragmentText.Length - Doc.TokenCodeEnd.Length -
+                                                   Doc.TokenCodeStart.Length - 1).Trim();
                     if (_code.StartsWith("="))
                     {
-                        _code = _doc.TokenResponseWrite + _code.Substring(1, _code.Length - 1);
+                        _code = Doc.TokenResponseWrite + _code.Substring(1, _code.Length - 1);
                     }
                 }
                 return _code;
             }
-            set
-            {
-                _code = value;
-            }
+            set { _code = value; }
         }
+
+        #endregion
     }
 }

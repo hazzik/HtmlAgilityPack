@@ -1,6 +1,4 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -8,12 +6,38 @@ namespace HtmlAgilityPack
     /// </summary>
     public class HtmlCommentNode : HtmlNode
     {
+        #region Fields
+
         private string _comment;
+
+        #endregion
+
+        #region Constructors
 
         internal HtmlCommentNode(HtmlDocument ownerdocument, int index)
             :
-            base(HtmlNodeType.Comment, ownerdocument, index)
+                base(HtmlNodeType.Comment, ownerdocument, index)
         {
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or Sets the comment text of the node.
+        /// </summary>
+        public string Comment
+        {
+            get
+            {
+                if (_comment == null)
+                {
+                    return base.InnerHtml;
+                }
+                return _comment;
+            }
+            set { _comment = value; }
         }
 
         /// <summary>
@@ -29,10 +53,7 @@ namespace HtmlAgilityPack
                 }
                 return _comment;
             }
-            set
-            {
-                _comment = value;
-            }
+            set { _comment = value; }
         }
 
         /// <summary>
@@ -50,24 +71,6 @@ namespace HtmlAgilityPack
             }
         }
 
-        /// <summary>
-        /// Gets or Sets the comment text of the node.
-        /// </summary>
-        public string Comment
-        {
-            get
-            {
-                if (_comment == null)
-                {
-                    return base.InnerHtml;
-                }
-                return _comment;
-            }
-            set
-            {
-                _comment = value;
-            }
-        }
+        #endregion
     }
-
 }

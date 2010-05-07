@@ -4,12 +4,9 @@ using System.Diagnostics;
 
 namespace HtmlAgilityPack
 {
-    internal class HtmlConsoleListener : System.Diagnostics.TraceListener
+    internal class HtmlConsoleListener : TraceListener
     {
-        public override void WriteLine(string Message)
-        {
-            Write(Message + "\n");
-        }
+        #region Public Methods
 
         public override void Write(string Message)
         {
@@ -21,10 +18,16 @@ namespace HtmlAgilityPack
             Console.Write("T:" + Category + ": " + Message);
         }
 
+        public override void WriteLine(string Message)
+        {
+            Write(Message + "\n");
+        }
+
         public override void WriteLine(string Message, string Category)
         {
             Write(Message + "\n", Category);
         }
-    }
 
+        #endregion
+    }
 }

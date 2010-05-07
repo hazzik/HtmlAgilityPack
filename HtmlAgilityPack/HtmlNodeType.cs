@@ -1,6 +1,4 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -28,5 +26,4 @@ namespace HtmlAgilityPack
         /// </summary>
         Text,
     }
-
 }

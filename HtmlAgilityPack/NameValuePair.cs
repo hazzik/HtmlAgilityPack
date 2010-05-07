@@ -1,12 +1,16 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
     internal class NameValuePair
     {
+        #region Fields
+
         internal readonly string Name;
         internal string Value;
+
+        #endregion
+
+        #region Constructors
 
         internal NameValuePair()
         {
@@ -14,17 +18,18 @@ namespace HtmlAgilityPack
 
         internal NameValuePair(string name)
             :
-            this()
+                this()
         {
             Name = name;
         }
 
         internal NameValuePair(string name, string value)
             :
-            this(name)
+                this(name)
         {
             Value = value;
         }
-    }
 
+        #endregion
+    }
 }

@@ -1,20 +1,23 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
-using System;
-
 namespace HtmlAgilityPack
 {
-
     /// <summary>
     /// Represents a parsing error found during document parsing.
     /// </summary>
     public class HtmlParseError
     {
+        #region Fields
+
         private HtmlParseErrorCode _code;
         private int _line;
         private int _linePosition;
-        private int _streamPosition;
-        private string _sourceText;
         private string _reason;
+        private string _sourceText;
+        private int _streamPosition;
+
+        #endregion
+
+        #region Constructors
 
         internal HtmlParseError(
             HtmlParseErrorCode code,
@@ -32,15 +35,16 @@ namespace HtmlAgilityPack
             _reason = reason;
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Gets the type of error.
         /// </summary>
         public HtmlParseErrorCode Code
         {
-            get
-            {
-                return _code;
-            }
+            get { return _code; }
         }
 
         /// <summary>
@@ -48,10 +52,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public int Line
         {
-            get
-            {
-                return _line;
-            }
+            get { return _line; }
         }
 
         /// <summary>
@@ -59,32 +60,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public int LinePosition
         {
-            get
-            {
-                return _linePosition;
-            }
-        }
-
-        /// <summary>
-        /// Gets the absolute stream position of this error in the document, relative to the start of the document.
-        /// </summary>
-        public int StreamPosition
-        {
-            get
-            {
-                return _streamPosition;
-            }
-        }
-
-        /// <summary>
-        /// Gets the the full text of the line containing the error.
-        /// </summary>
-        public string SourceText
-        {
-            get
-            {
-                return _sourceText;
-            }
+            get { return _linePosition; }
         }
 
         /// <summary>
@@ -92,10 +68,25 @@ namespace HtmlAgilityPack
         /// </summary>
         public string Reason
         {
-            get
-            {
-                return _reason;
-            }
+            get { return _reason; }
         }
+
+        /// <summary>
+        /// Gets the the full text of the line containing the error.
+        /// </summary>
+        public string SourceText
+        {
+            get { return _sourceText; }
+        }
+
+        /// <summary>
+        /// Gets the absolute stream position of this error in the document, relative to the start of the document.
+        /// </summary>
+        public int StreamPosition
+        {
+            get { return _streamPosition; }
+        }
+
+        #endregion
     }
 }
