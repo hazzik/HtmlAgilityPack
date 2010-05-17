@@ -1863,14 +1863,7 @@ namespace HtmlAgilityPack
             string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
             if (_ownerdocument.OptionOutputAsXml)
             {
-                if (_ownerdocument.OptionOutputUpperCase)
-                {
-                    name = att.XmlName.ToUpper();
-                }
-                else
-                {
-                    name = att.XmlName;
-                }
+                name = _ownerdocument.OptionOutputUpperCase ? att.XmlName.ToUpper() : att.XmlName;
                 if (_ownerdocument.OptionOutputOriginalCase)
                     name = att.OriginalName;
 
@@ -1878,14 +1871,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-                if (_ownerdocument.OptionOutputUpperCase)
-                {
-                    name = att.Name.ToUpper();
-                }
-                else
-                {
-                    name = att.Name;
-                }
+                name = _ownerdocument.OptionOutputUpperCase ? att.Name.ToUpper() : att.Name;
 
                 if (att.Name.Length >= 4)
                 {

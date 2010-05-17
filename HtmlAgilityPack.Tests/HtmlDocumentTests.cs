@@ -17,6 +17,30 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual("href", a.Name);
         }
         [Test]
+        public void CreateAttributeWithText()
+        {
+            HtmlDocument doc = new HtmlDocument();
+            var a = doc.CreateAttribute("href","http://something.com");
+            Assert.AreEqual("href", a.Name);
+            Assert.AreEqual("http://something.com", a.Value);
+        }
+        [Test]
+        public void CreateAttributeWithEncodedText()
+        {
+            HtmlDocument doc = new HtmlDocument();
+            var a = doc.CreateAttribute("href", "http://something.com\"&<>");
+            Assert.AreEqual("href", a.Name);
+            Assert.AreEqual("http://something.com\"&<>", a.Value);
+            
+        }
+        [Test]
+        public void HtmlEncode()
+        {
+            var result = HtmlDocument.HtmlEncode("http://something.com\"&<>");
+            Assert.AreEqual("http://something.com&quot;&amp;&lt;&gt;", result);
+
+        }
+        [Test]
         public void CreateElement()
         {
             HtmlDocument doc = new HtmlDocument();
