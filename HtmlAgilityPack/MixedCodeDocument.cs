@@ -363,7 +363,7 @@ namespace HtmlAgilityPack
         {
             if (_streamencoding != null)
                 return _streamencoding;
-            return Encoding.Default;
+            return Encoding.UTF8;
         }
 
         #endregion

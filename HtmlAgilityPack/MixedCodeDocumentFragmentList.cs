@@ -1,6 +1,7 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace HtmlAgilityPack
 {
@@ -12,7 +13,7 @@ namespace HtmlAgilityPack
         #region Fields
 
         private MixedCodeDocument _doc;
-        private ArrayList _items = new ArrayList();
+        private IList<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
 
         #endregion
 
@@ -174,13 +175,13 @@ namespace HtmlAgilityPack
             #region Fields
 
             private int _index;
-            private ArrayList _items;
+            private IList<MixedCodeDocumentFragment> _items;
 
             #endregion
 
             #region Constructors
 
-            internal MixedCodeDocumentFragmentEnumerator(ArrayList items)
+            internal MixedCodeDocumentFragmentEnumerator(IList<MixedCodeDocumentFragment> items)
             {
                 _items = items;
                 _index = -1;

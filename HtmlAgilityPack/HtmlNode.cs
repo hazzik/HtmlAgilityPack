@@ -66,7 +66,7 @@ namespace HtmlAgilityPack
         /// Gets a collection of flags that define specific behaviors for specific element nodes.
         /// The table contains a DictionaryEntry list with the lowercase tag name as the Key, and a combination of HtmlElementFlags as the Value.
         /// </summary>
-        public static Hashtable ElementsFlags;
+        public static Dictionary<string, HtmlElementFlag> ElementsFlags;
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace HtmlAgilityPack
         static HtmlNode()
         {
             // tags whose content may be anything
-            ElementsFlags = new Hashtable();
+            ElementsFlags = new Dictionary<string, HtmlElementFlag>();
             ElementsFlags.Add("script", HtmlElementFlag.CData);
             ElementsFlags.Add("style", HtmlElementFlag.CData);
             ElementsFlags.Add("noxhtml", HtmlElementFlag.CData);
@@ -316,7 +316,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_ownerdocument._nodesid == null)
+                if (_ownerdocument.Nodesid == null)
                 {
                     throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
                 }
@@ -324,7 +324,7 @@ namespace HtmlAgilityPack
             }
             set
             {
-                if (_ownerdocument._nodesid == null)
+                if (_ownerdocument.Nodesid == null)
                 {
                     throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
                 }
@@ -582,12 +582,13 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            object flag = ElementsFlags[name.ToLower()];
-            if (flag == null)
+            if (!ElementsFlags.ContainsKey(name.ToLower()))
             {
                 return false;
             }
-            return (((HtmlElementFlag) flag) & HtmlElementFlag.CanOverlap) != 0;
+
+            HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+            return (flag & HtmlElementFlag.CanOverlap) != 0;
         }
 
         /// <summary>
@@ -615,12 +616,13 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            object flag = ElementsFlags[name.ToLower()];
-            if (flag == null)
+            if (!ElementsFlags.ContainsKey(name.ToLower()))
             {
                 return false;
             }
-            return (((HtmlElementFlag) flag) & HtmlElementFlag.CData) != 0;
+
+            HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+            return (flag & HtmlElementFlag.CData) != 0;
         }
 
         /// <summary>
@@ -635,12 +637,13 @@ namespace HtmlAgilityPack
                 throw new ArgumentNullException("name");
             }
 
-            object flag = ElementsFlags[name.ToLower()];
-            if (flag == null)
+            if (!ElementsFlags.ContainsKey(name.ToLower()))
             {
                 return false;
             }
-            return (((HtmlElementFlag) flag) & HtmlElementFlag.Closed) != 0;
+
+            HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+            return (flag & HtmlElementFlag.Closed) != 0;
         }
 
         /// <summary>
@@ -672,12 +675,13 @@ namespace HtmlAgilityPack
                 return true;
             }
 
-            object flag = ElementsFlags[name.ToLower()];
-            if (flag == null)
+            if (!ElementsFlags.ContainsKey(name.ToLower()))
             {
                 return false;
             }
-            return (((HtmlElementFlag) flag) & HtmlElementFlag.Empty) != 0;
+
+            HtmlElementFlag flag = ElementsFlags[name.ToLower()];
+            return (flag & HtmlElementFlag.Empty) != 0;
         }
 
         /// <summary>
@@ -1531,9 +1535,13 @@ namespace HtmlAgilityPack
                 case HtmlNodeType.Document:
                     if (_ownerdocument.OptionOutputAsXml)
                     {
+#if SILVERLIGHT
+                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName +
+                                     "\"?>");
+#else
                         outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName +
                                       "\"?>");
-
+#endif
                         // check there is a root element
                         if (_ownerdocument.DocumentNode.HasChildNodes)
                         {
@@ -1697,9 +1705,16 @@ namespace HtmlAgilityPack
                     break;
 
                 case HtmlNodeType.Document:
-                    writer.WriteProcessingInstruction("xml",
+                    #if SILVERLIGHT
+                        writer.WriteProcessingInstruction("xml",
+                                                      "version=\"1.0\" encoding=\"" +
+                                                      _ownerdocument.GetOutEncoding().WebName + "\"");
+#else
+                         writer.WriteProcessingInstruction("xml",
                                                       "version=\"1.0\" encoding=\"" +
                                                       _ownerdocument.GetOutEncoding().BodyName + "\"");
+#endif
+
                     if (HasChildNodes)
                     {
                         foreach (HtmlNode subnode in ChildNodes)
@@ -1801,10 +1816,10 @@ namespace HtmlAgilityPack
                     _ownerdocument._openednodes.Remove(_outerstartindex);
                 }
 
-                HtmlNode self = _ownerdocument._lastnodes[Name] as HtmlNode;
+                HtmlNode self = _ownerdocument.Lastnodes[Name] as HtmlNode;
                 if (self == this)
                 {
-                    _ownerdocument._lastnodes.Remove(Name);
+                    _ownerdocument.Lastnodes.Remove(Name);
                     _ownerdocument.UpdateLastParentNode();
                 }
 

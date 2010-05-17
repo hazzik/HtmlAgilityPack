@@ -1,6 +1,7 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace HtmlAgilityPack
@@ -14,13 +15,13 @@ namespace HtmlAgilityPack
         #region Static Members
 
         private static readonly int _maxEntitySize;
-        private static Hashtable _entityName;
-        private static Hashtable _entityValue;
+        private static Dictionary<int,string> _entityName;
+        private static Dictionary<string, int> _entityValue;
 
         /// <summary>
         /// A collection of entities indexed by name.
         /// </summary>
-        public static Hashtable EntityName
+        public static Dictionary<int, string> EntityName
         {
             get { return _entityName; }
         }
@@ -28,7 +29,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// A collection of entities indexed by value.
         /// </summary>
-        public static Hashtable EntityValue
+        public static Dictionary<string, int> EntityValue
         {
             get { return _entityValue; }
         }
@@ -39,8 +40,8 @@ namespace HtmlAgilityPack
 
         static HtmlEntity()
         {
-            _entityName = new Hashtable();
-            _entityValue = new Hashtable();
+            _entityName = new Dictionary<int, string>();
+            _entityValue = new Dictionary<string, int>();
 
             #region Entities Definition
 

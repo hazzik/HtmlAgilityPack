@@ -1,6 +1,5 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -25,14 +24,14 @@ namespace HtmlAgilityPack
         private HtmlNode _documentnode;
         private bool _fullcomment;
         private int _index;
-        internal Hashtable _lastnodes = new Hashtable();
+        internal Dictionary<string, HtmlNode> Lastnodes = new Dictionary<string,HtmlNode>();
         private HtmlNode _lastparentnode;
         private int _line;
         private int _lineposition, _maxlineposition;
-        internal Hashtable _nodesid;
+        internal Dictionary<string, HtmlNode> Nodesid;
         private ParseState _oldstate;
         private bool _onlyDetectEncoding;
-        internal Hashtable _openednodes;
+        internal Dictionary<int, HtmlNode> _openednodes;
         private List<HtmlParseError> _parseerrors = new List<HtmlParseError>();
         private string _remainder;
         private int _remainderOffset;
@@ -63,11 +62,18 @@ namespace HtmlAgilityPack
         /// </summary>
         public bool OptionComputeChecksum;
 
+
+#if SILVERLIGHT
+        /// <summary>
+        /// Defines the default stream encoding to use. Default is System.Text.Encoding.Default.
+        /// </summary>
+        public Encoding OptionDefaultStreamEncoding = Encoding.UTF8;
+#else
         /// <summary>
         /// Defines the default stream encoding to use. Default is System.Text.Encoding.Default.
         /// </summary>
         public Encoding OptionDefaultStreamEncoding = Encoding.Default;
-
+#endif
         /// <summary>
         /// Defines if source text must be extracted while parsing errors.
         /// If the document has a lot of errors, or cascading errors, parsing performance can be dramatically affected if set to true.
@@ -323,10 +329,9 @@ namespace HtmlAgilityPack
         /// <returns>The new HTML attribute.</returns>
         public HtmlAttribute CreateAttribute(string name)
         {
-            if (name == null)
-            {
+            if (name == null)            
                 throw new ArgumentNullException("name");
-            }
+            
             HtmlAttribute att = CreateAttribute();
             att.Name = name;
             return att;
@@ -460,7 +465,7 @@ namespace HtmlAgilityPack
             _onlyDetectEncoding = true;
             if (OptionCheckSyntax)
             {
-                _openednodes = new Hashtable();
+                _openednodes = new Dictionary<int, HtmlNode>();
             }
             else
             {
@@ -469,11 +474,11 @@ namespace HtmlAgilityPack
 
             if (OptionUseIdAttribute)
             {
-                _nodesid = new Hashtable();
+                Nodesid = new Dictionary<string, HtmlNode>();
             }
             else
             {
-                _nodesid = null;
+                Nodesid = null;
             }
 
             StreamReader sr = reader as StreamReader;
@@ -570,12 +575,11 @@ namespace HtmlAgilityPack
             {
                 throw new ArgumentNullException("id");
             }
-            if (_nodesid == null)
+            if (Nodesid == null)
             {
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
-
-            return _nodesid[id.ToLower()] as HtmlNode;
+            return Nodesid.ContainsKey(id.ToLower()) ? Nodesid[id.ToLower()] : null;
         }
 
         /// <summary>
@@ -729,17 +733,17 @@ namespace HtmlAgilityPack
             _onlyDetectEncoding = false;
 
             if (OptionCheckSyntax)
-                _openednodes = new Hashtable();
+                _openednodes = new Dictionary<int, HtmlNode>();
             else
                 _openednodes = null;
 
             if (OptionUseIdAttribute)
             {
-                _nodesid = new Hashtable();
+                Nodesid = new Dictionary<string, HtmlNode>();
             }
             else
             {
-                _nodesid = null;
+                Nodesid = null;
             }
 
             StreamReader sr = reader as StreamReader;
@@ -979,18 +983,18 @@ namespace HtmlAgilityPack
                 return;
             }
 
-            if ((_nodesid == null) || (id == null))
+            if ((Nodesid == null) || (id == null))
             {
                 return;
             }
 
             if (node == null)
             {
-                _nodesid.Remove(id.ToLower());
+                Nodesid.Remove(id.ToLower());
             }
             else
             {
-                _nodesid[id.ToLower()] = node;
+                Nodesid[id.ToLower()] = node;
             }
         }
 
@@ -1032,10 +1036,10 @@ namespace HtmlAgilityPack
                 return;
 
             bool error = false;
+            HtmlNode prev;
 
             // find last node of this kind
-            HtmlNode prev = (HtmlNode)_lastnodes[_currentnode.Name];
-            if (prev == null)
+            if (Lastnodes.ContainsKey(_currentnode.Name))
             {
                 if (HtmlNode.IsClosedElement(_currentnode.Name))
                 {
@@ -1046,7 +1050,7 @@ namespace HtmlAgilityPack
                     if (_lastparentnode != null)
                     {
                         HtmlNode foundNode = null;
-                        Stack futureChild = new Stack();
+                        Stack<HtmlNode> futureChild = new Stack<HtmlNode>();
                         for (HtmlNode node = _lastparentnode.LastChild; node != null; node = node.PreviousSibling)
                         {
                             if ((node.Name == _currentnode.Name) && (!node.HasChildNodes))
@@ -1061,7 +1065,7 @@ namespace HtmlAgilityPack
                             HtmlNode node = null;
                             while (futureChild.Count != 0)
                             {
-                                node = (HtmlNode)futureChild.Pop();
+                                node = futureChild.Pop();
                                 _lastparentnode.RemoveChild(node);
                                 foundNode.AppendChild(node);
                             }
@@ -1113,6 +1117,8 @@ namespace HtmlAgilityPack
             }
             else
             {
+                prev = Lastnodes[_currentnode.Name];
+
                 if (OptionFixNestedTags)
                 {
                     if (FindResetterNodes(prev, GetResetters(_currentnode.Name)))
@@ -1128,7 +1134,7 @@ namespace HtmlAgilityPack
 
                 if (!error)
                 {
-                    _lastnodes[_currentnode.Name] = prev._prevwithsamename;
+                    Lastnodes[_currentnode.Name] = prev._prevwithsamename;
                     prev.CloseNode(_currentnode);
                 }
             }
@@ -1188,9 +1194,9 @@ namespace HtmlAgilityPack
 
         private HtmlNode FindResetterNode(HtmlNode node, string name)
         {
-            HtmlNode resetter = (HtmlNode)_lastnodes[name];
-            if (resetter == null)
+            if (!Lastnodes.ContainsKey(name))
                 return null;
+            HtmlNode resetter = Lastnodes[name];
             if (resetter.Closed)
             {
                 return null;
@@ -1223,12 +1229,12 @@ namespace HtmlAgilityPack
             if (resetters == null)
                 return;
 
-            HtmlNode prev;
-
+           
             // if we find a previous unclosed same name node, without a resetter node between, we must close it
-            prev = (HtmlNode)_lastnodes[name];
-            if ((prev != null) && (!prev.Closed))
+            if (Lastnodes.ContainsKey(name) && (!Lastnodes[name].Closed))
             {
+                HtmlNode prev = Lastnodes[name];
+
                 // try to find a resetter node, if found, we do nothing
                 if (FindResetterNodes(prev, resetters))
                 {
@@ -1366,7 +1372,7 @@ namespace HtmlAgilityPack
                 _crc32 = new Crc32();
             }
 
-            _lastnodes = new Hashtable();
+            Lastnodes = new Dictionary<string, HtmlNode>();
             _c = 0;
             _fullcomment = false;
             _parseerrors = new List<HtmlParseError>();
@@ -1707,7 +1713,7 @@ namespace HtmlAgilityPack
                         if ((_currentnode._namelength + 3) <= (_text.Length - (_index - 1)))
                         {
                             if (string.Compare(_text.Substring(_index - 1, _currentnode._namelength + 2),
-                                               "</" + _currentnode.Name, true) == 0)
+                                               "</" + _currentnode.Name, StringComparison.OrdinalIgnoreCase) == 0)
                             {
                                 int c = _text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
@@ -1739,7 +1745,7 @@ namespace HtmlAgilityPack
             PushNodeEnd(_index, false);
 
             // we don't need this anymore
-            _lastnodes.Clear();
+            Lastnodes.Clear();
         }
 
         private void PushAttributeNameEnd(int index)
@@ -1805,9 +1811,12 @@ namespace HtmlAgilityPack
                     ReadDocumentEncoding(_currentnode);
 
                     // remember last node of this kind
-                    HtmlNode prev = (HtmlNode)_lastnodes[_currentnode.Name];
+                    HtmlNode prev = null;
+                    if (Lastnodes.ContainsKey(_currentnode.Name))
+                        prev = Lastnodes[_currentnode.Name];
+
                     _currentnode._prevwithsamename = prev;
-                    _lastnodes[_currentnode.Name] = _currentnode;
+                    Lastnodes[_currentnode.Name] = _currentnode;
 
                     // change parent?
                     if ((_currentnode.NodeType == HtmlNodeType.Document) ||
@@ -1833,7 +1842,7 @@ namespace HtmlAgilityPack
             if ((close) || (!_currentnode._starttag))
             {
                 if ((OptionStopperNodeName != null) && (_remainder == null) &&
-                    (string.Compare(_currentnode.Name, OptionStopperNodeName, true) == 0))
+                    (string.Compare(_currentnode.Name, OptionStopperNodeName, StringComparison.OrdinalIgnoreCase) == 0))
                 {
                     _remainderOffset = index;
                     _remainder = _text.Substring(_remainderOffset);
@@ -1887,7 +1896,7 @@ namespace HtmlAgilityPack
             HtmlAttribute att = node.Attributes["http-equiv"];
             if (att == null)
                 return;
-            if (string.Compare(att.Value, "content-type", true) != 0)
+            if (string.Compare(att.Value, "content-type", StringComparison.OrdinalIgnoreCase) != 0)
                 return;
             HtmlAttribute content = node.Attributes["content"];
             if (content != null)
@@ -1913,7 +1922,11 @@ namespace HtmlAgilityPack
 
                     if (_streamencoding != null)
                     {
+#if SILVERLIGHT
+                        if (_declaredencoding.WebName != _streamencoding.WebName)
+#else
                         if (_declaredencoding.WindowsCodePage != _streamencoding.WindowsCodePage)
+#endif
                         {
                             AddError(
                                 HtmlParseErrorCode.CharsetMismatch,

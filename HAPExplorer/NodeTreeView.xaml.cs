@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace HAPExplorer
     /// <summary>
     /// Interaction logic for NodeTreeView.xaml
     /// </summary>
-    public partial class NodeTreeView : TreeView
+    public partial class NodeTreeView
     {
         private HtmlNode baseNode;
         public NodeTreeView()
@@ -29,7 +30,9 @@ namespace HAPExplorer
         public HtmlNode BaseNode
         {
             get { return baseNode; }
-            set { baseNode = value;
+            set
+            {
+                baseNode = value;
                 PopulateTreeview();
             }
         }
@@ -67,11 +70,18 @@ namespace HAPExplorer
             var elements = new TreeViewItem { Header = "Elements", DataContext = htmlNode };
             foreach (var node in htmlNode.ChildNodes)
             {
-                //If there are no attributes, no need to add a node inbetween the parent in the treeview
-                if (attributes.Items.Count > 0)
-                    elements.Items.Add(BuildTree(node));
-                else
-                    item.Items.Add(BuildTree(node));
+                try
+                {
+                    //If there are no attributes, no need to add a node inbetween the parent in the treeview
+                    if (attributes.Items.Count > 0)
+                        elements.Items.Add(BuildTree(node));
+                    else
+                        item.Items.Add(BuildTree(node));
+                }
+                catch(InvalidOperationException e)
+                {
+                    //Debugger.Break();
+                }
             }
 
             //If there are no nodes in the elements collection, don't add to the parent 

@@ -749,7 +749,8 @@ namespace HtmlAgilityPack
                         break;
                 }
             }
-            System.Diagnostics.Trace.WriteLine(string.Format("oid={0},n={1},a={2},v={3},{4}", GetHashCode(), nodename, _attindex, nodevalue, traceValue), "N!" + name);
+           
+            HtmlAgilityPack.Trace.WriteLine(string.Format("oid={0},n={1},a={2},v={3},{4}", GetHashCode(), nodename, _attindex, nodevalue, traceValue), "N!" + name);
         }
 
         #endregion
