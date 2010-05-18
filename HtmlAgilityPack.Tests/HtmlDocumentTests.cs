@@ -81,5 +81,13 @@ namespace HtmlAgilityPack.Tests
             Assert.AreEqual("something", a.InnerText);
             Assert.AreEqual(a.NodeType, HtmlNodeType.Text);
         }
+
+        [Test]
+        public void TestParse()
+        {
+            HtmlDocument doc = new HtmlDocument();
+            doc.Load("mshome.htm");
+            Assert.IsTrue(doc.DocumentNode.DescendantNodes().Count() > 0);
+        }
     }
 }

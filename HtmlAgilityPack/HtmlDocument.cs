@@ -1039,7 +1039,7 @@ namespace HtmlAgilityPack
             HtmlNode prev;
 
             // find last node of this kind
-            if (Lastnodes.ContainsKey(_currentnode.Name))
+            if (!Lastnodes.ContainsKey(_currentnode.Name))
             {
                 if (HtmlNode.IsClosedElement(_currentnode.Name))
                 {
