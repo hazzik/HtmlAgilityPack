@@ -1,12 +1,11 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
-
+// ReSharper disable InconsistentNaming
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -190,14 +189,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public HtmlNodeCollection ChildNodes
         {
-            get
-            {
-                if (_childnodes == null)
-                {
-                    _childnodes = new HtmlNodeCollection(this);
-                }
-                return _childnodes;
-            }
+            get { return _childnodes ?? (_childnodes = new HtmlNodeCollection(this)); }
             internal set { _childnodes = value; }
         }
 
@@ -216,11 +208,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (!HasClosingAttributes)
-                {
-                    return new HtmlAttributeCollection(this);
-                }
-                return _endnode.Attributes;
+                return !HasClosingAttributes ? new HtmlAttributeCollection(this) : _endnode.Attributes;
             }
         }
 
@@ -236,11 +224,7 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (!HasChildNodes)
-                {
-                    return null;
-                }
-                return _childnodes[0];
+                return !HasChildNodes ? null : _childnodes[0];
             }
         }
 
@@ -782,7 +766,7 @@ namespace HtmlAgilityPack
         public void AppendChildren(HtmlNodeCollection newChildren)
         {
             if (newChildren == null)
-                throw new ArgumentNullException("newChildrend");
+                throw new ArgumentNullException("newChildren");
 
             foreach (HtmlNode newChild in newChildren)
             {
@@ -1523,13 +1507,9 @@ namespace HtmlAgilityPack
                 case HtmlNodeType.Comment:
                     html = ((HtmlCommentNode) this).Comment;
                     if (_ownerdocument.OptionOutputAsXml)
-                    {
                         outText.Write("<!--" + GetXmlComment((HtmlCommentNode) this) + " -->");
-                    }
                     else
-                    {
                         outText.Write(html);
-                    }
                     break;
 
                 case HtmlNodeType.Document:
@@ -1550,9 +1530,7 @@ namespace HtmlAgilityPack
                             {
                                 HtmlNode xml = _ownerdocument.GetXmlDeclaration();
                                 if (xml != null)
-                                {
                                     rootnodes --;
-                                }
 
                                 if (rootnodes > 1)
                                 {
@@ -1578,26 +1556,11 @@ namespace HtmlAgilityPack
 
                 case HtmlNodeType.Text:
                     html = ((HtmlTextNode) this).Text;
-                    if (_ownerdocument.OptionOutputAsXml)
-                    {
-                        outText.Write(HtmlDocument.HtmlEncode(html));
-                    }
-                    else
-                    {
-                        outText.Write(html);
-                    }
+                    outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncode(html) : html);
                     break;
 
                 case HtmlNodeType.Element:
-                    string name;
-                    if (_ownerdocument.OptionOutputUpperCase)
-                    {
-                        name = Name.ToUpper();
-                    }
-                    else
-                    {
-                        name = Name;
-                    }
+                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
 
                     if (_ownerdocument.OptionOutputOriginalCase)
                         name = OriginalName;
@@ -1812,11 +1775,9 @@ namespace HtmlAgilityPack
                 _endnode = endnode;
 
                 if (_ownerdocument._openednodes != null)
-                {
                     _ownerdocument._openednodes.Remove(_outerstartindex);
-                }
 
-                HtmlNode self = _ownerdocument.Lastnodes[Name] as HtmlNode;
+                HtmlNode self = Utilities.GetDictionaryValueOrNull(_ownerdocument.Lastnodes,Name);
                 if (self == this)
                 {
                     _ownerdocument.Lastnodes.Remove(Name);
@@ -1838,20 +1799,12 @@ namespace HtmlAgilityPack
         internal string GetId()
         {
             HtmlAttribute att = Attributes["id"];
-            if (att == null)
-            {
-                return string.Empty;
-            }
-            return att.Value;
+            return att == null ? string.Empty : att.Value;
         }
 
         internal void SetId(string id)
         {
-            HtmlAttribute att = Attributes["id"];
-            if (att == null)
-            {
-                att = _ownerdocument.CreateAttribute("id");
-            }
+            HtmlAttribute att = Attributes["id"] ?? _ownerdocument.CreateAttribute("id");
             att.Value = id;
             _ownerdocument.SetIdForNode(this, att.Value);
             _outerchanged = true;
@@ -1883,20 +1836,12 @@ namespace HtmlAgilityPack
                     }
                 }
                 if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-                {
-                    if (att.Value.IndexOfAny(new Char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
-                    {
-                        outText.Write(" " + name + "=" + att.Value);
-                    }
-                    else
-                    {
-                        outText.Write(" " + name + "=" + quote + att.Value + quote);
-                    }
-                }
-                else
-                {
-                    outText.Write(" " + name + "=" + quote + att.Value + quote);
-                }
+                    if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
+                        outText.Write(" " + name + "=" + att.Value);                    
+                    else                    
+                        outText.Write(" " + name + "=" + quote + att.Value + quote);                                    
+                else                
+                    outText.Write(" " + name + "=" + quote + att.Value + quote);                
             }
         }
 
@@ -1918,53 +1863,35 @@ namespace HtmlAgilityPack
 
             if (!closing)
             {
-                if (_attributes != null)
-                {
-                    foreach (HtmlAttribute att in _attributes)
-                    {
+                if (_attributes != null)                
+                    foreach (HtmlAttribute att in _attributes)                    
                         WriteAttribute(outText, att);
-                    }
-                }
-                if (_ownerdocument.OptionAddDebuggingAttributes)
-                {
-                    WriteAttribute(outText, _ownerdocument.CreateAttribute("_closed", Closed.ToString()));
-                    WriteAttribute(outText, _ownerdocument.CreateAttribute("_children", ChildNodes.Count.ToString()));
 
-                    int i = 0;
-                    foreach (HtmlNode n in ChildNodes)
-                    {
-                        WriteAttribute(outText, _ownerdocument.CreateAttribute("_child_" + i,
-                                                                               n.Name));
-                        i++;
-                    }
+                if (!_ownerdocument.OptionAddDebuggingAttributes) return;
+
+                WriteAttribute(outText, _ownerdocument.CreateAttribute("_closed", Closed.ToString()));
+                WriteAttribute(outText, _ownerdocument.CreateAttribute("_children", ChildNodes.Count.ToString()));
+
+                int i = 0;
+                foreach (HtmlNode n in ChildNodes)
+                {
+                    WriteAttribute(outText, _ownerdocument.CreateAttribute("_child_" + i,
+                                                                           n.Name));
+                    i++;
                 }
             }
             else
             {
-                if (_endnode == null)
-                {
+                if (_endnode == null || _endnode._attributes == null ||_endnode == this)                
                     return;
-                }
-
-                if (_endnode._attributes == null)
-                {
-                    return;
-                }
-
-                if (_endnode == this)
-                {
-                    return;
-                }
-
-                foreach (HtmlAttribute att in _endnode._attributes)
-                {
+                
+                foreach (HtmlAttribute att in _endnode._attributes)                
                     WriteAttribute(outText, att);
-                }
-                if (_ownerdocument.OptionAddDebuggingAttributes)
-                {
-                    WriteAttribute(outText, _ownerdocument.CreateAttribute("_closed", Closed.ToString()));
-                    WriteAttribute(outText, _ownerdocument.CreateAttribute("_children", ChildNodes.Count.ToString()));
-                }
+
+                if (!_ownerdocument.OptionAddDebuggingAttributes) return;
+
+                WriteAttribute(outText, _ownerdocument.CreateAttribute("_closed", Closed.ToString()));
+                WriteAttribute(outText, _ownerdocument.CreateAttribute("_children", ChildNodes.Count.ToString()));
             }
         }
 

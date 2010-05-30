@@ -12,7 +12,7 @@ using System.Windows.Shapes;
 
 namespace HtmlAgilityPack
 {
-    public static class Extensions
+    public static class SilverlightExtensions
     {
         public static string[] Split(this string @this, char[] chars, int count)
         {

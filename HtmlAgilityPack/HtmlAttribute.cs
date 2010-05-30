@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 
 #endregion
+// ReSharper disable InconsistentNaming
 
 namespace HtmlAgilityPack
 {

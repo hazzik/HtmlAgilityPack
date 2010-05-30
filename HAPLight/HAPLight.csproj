@@ -134,7 +134,10 @@
     <Compile Include="..\HtmlAgilityPack\Trace.cs">
       <Link>Trace.cs</Link>
     </Compile>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="..\HtmlAgilityPack\Utilities.cs">
+      <Link>Utilities.cs</Link>
+    </Compile>
+    <Compile Include="SilverlightExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trace.Silverlight.cs" />
   </ItemGroup>

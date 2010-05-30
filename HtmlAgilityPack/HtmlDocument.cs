@@ -962,40 +962,27 @@ namespace HtmlAgilityPack
         internal HtmlNode GetXmlDeclaration()
         {
             if (!_documentnode.HasChildNodes)
-            {
                 return null;
-            }
 
             foreach (HtmlNode node in _documentnode._childnodes)
-            {
                 if (node.Name == "?xml") // it's ok, names are case sensitive
-                {
                     return node;
-                }
-            }
+            
             return null;
         }
 
         internal void SetIdForNode(HtmlNode node, string id)
         {
             if (!OptionUseIdAttribute)
-            {
                 return;
-            }
 
             if ((Nodesid == null) || (id == null))
-            {
                 return;
-            }
 
             if (node == null)
-            {
                 Nodesid.Remove(id.ToLower());
-            }
             else
-            {
                 Nodesid[id.ToLower()] = node;
-            }
         }
 
         internal void UpdateLastParentNode()
@@ -1003,14 +990,12 @@ namespace HtmlAgilityPack
             do
             {
                 if (_lastparentnode.Closed)
-                {
                     _lastparentnode = _lastparentnode.ParentNode;
-                }
+
             } while ((_lastparentnode != null) && (_lastparentnode.Closed));
+            
             if (_lastparentnode == null)
-            {
                 _lastparentnode = _documentnode;
-            }
         }
 
         #endregion
@@ -1036,10 +1021,10 @@ namespace HtmlAgilityPack
                 return;
 
             bool error = false;
-            HtmlNode prev;
+            HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
 
             // find last node of this kind
-            if (!Lastnodes.ContainsKey(_currentnode.Name))
+            if (prev==null)
             {
                 if (HtmlNode.IsClosedElement(_currentnode.Name))
                 {
@@ -1117,7 +1102,7 @@ namespace HtmlAgilityPack
             }
             else
             {
-                prev = Lastnodes[_currentnode.Name];
+                
 
                 if (OptionFixNestedTags)
                 {
@@ -1194,32 +1179,25 @@ namespace HtmlAgilityPack
 
         private HtmlNode FindResetterNode(HtmlNode node, string name)
         {
-            if (!Lastnodes.ContainsKey(name))
+            HtmlNode resetter = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
+            if (resetter == null)
                 return null;
-            HtmlNode resetter = Lastnodes[name];
+
             if (resetter.Closed)
-            {
                 return null;
-            }
-            if (resetter._streamposition < node._streamposition)
-            {
-                return null;
-            }
-            return resetter;
+
+            return resetter._streamposition < node._streamposition ? null : resetter;
         }
 
         private bool FindResetterNodes(HtmlNode node, string[] names)
         {
             if (names == null)
-            {
                 return false;
-            }
+
             for (int i = 0; i < names.Length; i++)
             {
                 if (FindResetterNode(node, names[i]) != null)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -1229,24 +1207,20 @@ namespace HtmlAgilityPack
             if (resetters == null)
                 return;
 
-           
+            HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
             // if we find a previous unclosed same name node, without a resetter node between, we must close it
-            if (Lastnodes.ContainsKey(name) && (!Lastnodes[name].Closed))
+            if (prev == null || (Lastnodes[name].Closed)) return;
+            // try to find a resetter node, if found, we do nothing
+            if (FindResetterNodes(prev, resetters))
             {
-                HtmlNode prev = Lastnodes[name];
-
-                // try to find a resetter node, if found, we do nothing
-                if (FindResetterNodes(prev, resetters))
-                {
-                    return;
-                }
-
-                // ok we need to close the prev now
-                // create a fake closer node
-                HtmlNode close = new HtmlNode(prev.NodeType, this, -1);
-                close._endnode = close;
-                prev.CloseNode(close);
+                return;
             }
+
+            // ok we need to close the prev now
+            // create a fake closer node
+            HtmlNode close = new HtmlNode(prev.NodeType, this, -1);
+            close._endnode = close;
+            prev.CloseNode(close);
         }
 
         private void FixNestedTags()
@@ -1811,9 +1785,7 @@ namespace HtmlAgilityPack
                     ReadDocumentEncoding(_currentnode);
 
                     // remember last node of this kind
-                    HtmlNode prev = null;
-                    if (Lastnodes.ContainsKey(_currentnode.Name))
-                        prev = Lastnodes[_currentnode.Name];
+                    HtmlNode prev = Utilities.GetDictionaryValueOrNull(Lastnodes, _currentnode.Name);
 
                     _currentnode._prevwithsamename = prev;
                     Lastnodes[_currentnode.Name] = _currentnode;
