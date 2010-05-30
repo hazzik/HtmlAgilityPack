@@ -9,8 +9,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using HtmlAgilityPack;
 using Microsoft.Win32;
-using System.Collections;
-using System.Collections.Generic;
 
 #endregion
 
@@ -28,7 +26,7 @@ namespace HAPExplorer
 
         #endregion
 
-        #region Constructors
+        #region C'tors
 
         public Window1()
         {
@@ -36,7 +34,8 @@ namespace HAPExplorer
             try
             {
                 txtHtml.Text = File.ReadAllText("mshome.htm");
-            }catch
+            }
+            catch
             {
             }
             InitializeFileDialog();
@@ -44,11 +43,23 @@ namespace HAPExplorer
 
         #endregion
 
-        #region Private Methods
+        #region Instance Methods
 
-        private void btnParse_Click(object sender, RoutedEventArgs e)
+        private string GetHtml(string link)
         {
-            ParseHtml();
+            var req = (HttpWebRequest)WebRequest.Create(link);
+            using (var resp = req.GetResponse().GetResponseStream())
+            using (var read = new StreamReader(resp))
+            {
+                return read.ReadToEnd();
+            }
+        }
+
+        private void InitializeFileDialog()
+        {
+            _fileDialog.FileName = "Document"; // Default file name
+            _fileDialog.DefaultExt = ".html"; // Default file extension
+            _fileDialog.Filter = "Text documents (.html,.htm,.aspx)|*.html;*.htm;*.aspx"; // Filter files by extension
         }
 
         private void ParseHtml()
@@ -61,14 +72,58 @@ namespace HAPExplorer
             hapTree.BaseNode = _html.DocumentNode;
         }
 
+        private void SearchFromNode(HtmlNode baseNode)
+        {
+            var nodes = Enumerable.Empty<HtmlNode>();
+
+            if (!_html.DocumentNode.HasChildNodes)
+                ParseHtml();
+
+            if (chkXPath.IsChecked == true)
+                nodes = baseNode.SelectNodes(txtSearchTag.Text);
+            else
+                nodes = baseNode.Descendants(txtSearchTag.Text);
+
+            if (nodes == null) return;
+
+            listResults.Items.Clear();
+
+            foreach (var node in nodes)
+            {
+                var tr = new NodeTreeView { BaseNode = node };
+                var lvi = new ListBoxItem();
+                var pnl = new StackPanel();
+                pnl.Children.Add(new Label
+                                     {
+                                         Content =
+                                             string.Format("id:{0} name:{1} children{2}", node.Id, node.Name,
+                                                           node.ChildNodes.Count),
+                                         FontWeight = FontWeights.Bold
+                                     });
+                pnl.Children.Add(tr);
+                lvi.Content = pnl;
+                listResults.Items.Add(lvi);
+            }
+            tabControl1.SelectedItem = tabSearchResults;
+        }
+
+        #endregion
+
+        #region Event Handling
+
+        private void btnParse_Click(object sender, RoutedEventArgs e)
+        {
+            ParseHtml();
+        }
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            HtmlNode node = _html.DocumentNode;
-            if(chkFromCurrent.IsChecked == true
+            var node = _html.DocumentNode;
+            if (chkFromCurrent.IsChecked == true
                 && hapTree.SelectedItem != null
-                && hapTree.SelectedItem is TreeViewItem 
+                && hapTree.SelectedItem is TreeViewItem
                 && ((TreeViewItem)hapTree.SelectedItem).DataContext is HtmlNode)
-            node = ((TreeViewItem)hapTree.SelectedItem).DataContext as HtmlNode;
+                node = ((TreeViewItem)hapTree.SelectedItem).DataContext as HtmlNode;
 
             SearchFromNode(node);
         }
@@ -88,7 +143,7 @@ namespace HAPExplorer
             try
             {
                 Cursor = Cursors.Wait;
-                var req = (HttpWebRequest) WebRequest.Create(link);
+                var req = (HttpWebRequest)WebRequest.Create(link);
                 using (var resp = req.GetResponse().GetResponseStream())
                 using (var read = new StreamReader(resp))
                 {
@@ -104,16 +159,6 @@ namespace HAPExplorer
             {
                 MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error,
                                 MessageBoxResult.OK);
-            }
-        }
-
-        private string GetHtml(string link)
-        {
-            var req = (HttpWebRequest) WebRequest.Create(link);
-            using (var resp = req.GetResponse().GetResponseStream())
-            using (var read = new StreamReader(resp))
-            {
-                return read.ReadToEnd();
             }
         }
 
@@ -140,13 +185,6 @@ namespace HAPExplorer
                 HtmlAttributeViewer1.DataContext = t.DataContext;
                 return;
             }
-        }
-
-        private void InitializeFileDialog()
-        {
-            _fileDialog.FileName = "Document"; // Default file name
-            _fileDialog.DefaultExt = ".html"; // Default file extension
-            _fileDialog.Filter = "Text documents (.html,.htm,.aspx)|*.html;*.htm;*.aspx"; // Filter files by extension
         }
 
         private void mnuExit_Click(object sender, RoutedEventArgs e)
@@ -192,16 +230,15 @@ namespace HAPExplorer
             try
             {
                 Cursor = Cursors.Wait;
-                //var req = (HttpWebRequest) WebRequest.Create(dialog.Url);
-                //using (var resp = req.GetResponse().GetResponseStream())
-                //using (var read = new StreamReader(resp))
-                //{
-                //    var txt = read.ReadToEnd();
-                //    txtHtml.Text = txt;
-                //}
-                var hw = new HtmlWeb();
-                _html = hw.Load(dialog.Url);
-                hapTree.BaseNode = _html.DocumentNode;
+                var req = (HttpWebRequest)WebRequest.Create(dialog.Url);
+                using (var resp = req.GetResponse().GetResponseStream())
+                using (var read = new StreamReader(resp))
+                {
+                    var txt = read.ReadToEnd();
+                    txtHtml.Text = txt;
+                    _html.LoadHtml(txt);
+                    hapTree.BaseNode = _html.DocumentNode;
+                }
             }
             catch (Exception ex)
             {
@@ -212,41 +249,6 @@ namespace HAPExplorer
             {
                 Cursor = Cursors.Arrow;
             }
-        }
-
-        private void SearchFromNode(HtmlNode baseNode)
-        {
-            IEnumerable<HtmlNode> nodes = Enumerable.Empty<HtmlNode>();
-
-            if (!_html.DocumentNode.HasChildNodes) 
-                ParseHtml();
-
-            if(chkXPath.IsChecked == true)
-                nodes = baseNode.SelectNodes(txtSearchTag.Text);
-            else
-                nodes = baseNode.Descendants(txtSearchTag.Text);
-
-            if (nodes == null) return;
-
-            listResults.Items.Clear();
-
-            foreach (var node in nodes)
-            {
-                var tr = new NodeTreeView {BaseNode = node};
-                var lvi = new ListBoxItem();
-                var pnl = new StackPanel();
-                pnl.Children.Add(new Label
-                                     {
-                                         Content =
-                                             string.Format("id:{0} name:{1} children{2}", node.Id, node.Name,
-                                                           node.ChildNodes.Count),
-                                         FontWeight = FontWeights.Bold
-                                     });
-                pnl.Children.Add(tr);
-                lvi.Content = pnl;
-                listResults.Items.Add(lvi);
-            }
-            tabControl1.SelectedItem = tabSearchResults;
         }
 
         #endregion
