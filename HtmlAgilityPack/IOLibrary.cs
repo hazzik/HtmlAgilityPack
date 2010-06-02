@@ -15,14 +15,18 @@ namespace HtmlAgilityPack
             MakeWritable(target);
             File.Copy(source, target, true);
         }
-
+#if !PocketPC
         internal static void MakeWritable(string path)
         {
             if (!File.Exists(path))
                 return;
             File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
         }
-
+#else
+        internal static void MakeWritable(string path)
+        {
+        }
+#endif
         #endregion
     }
 }

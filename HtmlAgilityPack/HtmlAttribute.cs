@@ -13,7 +13,9 @@ namespace HtmlAgilityPack
     /// <summary>
     /// Represents an HTML attribute.
     /// </summary>
+#if !PocketPC
     [DebuggerDisplay("Name: {OriginalName}, Value: {Value}")]
+#endif
     public class HtmlAttribute : IComparable
     {
         #region Fields

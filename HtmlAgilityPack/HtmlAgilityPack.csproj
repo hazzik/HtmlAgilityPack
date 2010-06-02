@@ -74,13 +74,16 @@
     <Compile Include="HtmlAttributeCollection.cs" />
     <Compile Include="HtmlCommentNode.cs" />
     <Compile Include="HtmlConsoleListener.cs" />
+    <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlElementFlag.cs" />
     <Compile Include="HtmlNameTable.cs" />
+    <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
     <Compile Include="HtmlNodeType.cs" />
     <Compile Include="HtmlParseError.cs" />
     <Compile Include="HtmlParseErrorCode.cs" />
     <Compile Include="HtmlTextNode.cs" />
+    <Compile Include="HtmlWeb.Xpath.cs" />
     <Compile Include="HtmlWebException.cs" />
     <Compile Include="IOLibrary.cs" />
     <Compile Include="MixedCodeDocumentCodeFragment.cs" />
