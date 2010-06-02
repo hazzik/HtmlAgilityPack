@@ -25,11 +25,12 @@ using System.Security;
 [assembly: ComVisible(false)]
 [assembly: Guid("643622ea-d2aa-4572-a2b2-6202b7fcd83f")]
 [assembly: AssemblyVersion("1.4.0.0")]
+#if !PocketPC
 [assembly: AssemblyFileVersion("1.4.0.0")]
 [assembly: AssemblyInformationalVersion("1.4.0.0")]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: AssemblyDelaySign(false)]
-
+#endif
 // 
 // Welcome to the HTML Agility Pack!
 // As you may have noticed, there is no HtmlAgilityPack file provided.
