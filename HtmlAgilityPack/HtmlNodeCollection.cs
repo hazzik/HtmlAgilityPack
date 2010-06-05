@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HtmlAgilityPack
 {
@@ -58,11 +59,7 @@ namespace HtmlAgilityPack
             get
             {
                 nodeName = nodeName.ToLower();
-                for (int i = 0; i < _items.Count; i++)
-                    if (_items[i].Equals(nodeName))
-                        return _items[i];
-
-                return null;
+                return _items.FirstOrDefault(t => t.Name.ToLower().Equals(nodeName));
             }
         }
 

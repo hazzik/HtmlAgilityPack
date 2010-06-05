@@ -42,14 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DynamicTests.cs" />
     <Compile Include="HtmlDocumentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HtmlAgilityPack\HtmlAgilityPack.csproj">
-      <Project>{193BB801-054F-4729-9D5D-FCE1E32594BF}</Project>
-      <Name>HtmlAgilityPack</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="files\mshome.htm">
@@ -59,7 +54,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\HtmlAgilityPack\HtmlAgilityPack.fx.4.0.csproj">
+      <Project>{1028002A-BBE2-4FF2-94B7-A8368A8F6887}</Project>
+      <Name>HtmlAgilityPack.fx.4.0</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
