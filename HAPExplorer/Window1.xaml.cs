@@ -137,28 +137,31 @@ namespace HAPExplorer
             var nodes =
                 homepage.DocumentNode.Descendants("a").Where(x => x.Id.ToLower().Contains("releasestab")).FirstOrDefault
                     ();
-            var link = nodes.Attributes["href"].Value;
+            if (nodes != null)
+            {
+                var link = nodes.Attributes["href"].Value;
 
-            var dc = new HtmlDocument();
-            try
-            {
-                Cursor = Cursors.Wait;
-                var req = (HttpWebRequest)WebRequest.Create(link);
-                using (var resp = req.GetResponse().GetResponseStream())
-                using (var read = new StreamReader(resp))
+                var dc = new HtmlDocument();
+                try
                 {
-                    dc.LoadHtml(read.ReadToEnd());
-                    var span =
-                        dc.DocumentNode.Descendants("span").Where(
-                            x => x.Id.ToLower().Contains("releasedownloadsliteral")).FirstOrDefault();
-                    MessageBox.Show(
-                        int.Parse(span.InnerHtml.ToLower().Replace("downloads", string.Empty).Trim()).ToString());
+                    Cursor = Cursors.Wait;
+                    var req = (HttpWebRequest)WebRequest.Create(link);
+                    using (var resp = req.GetResponse().GetResponseStream())
+                    using (var read = new StreamReader(resp))
+                    {
+                        dc.LoadHtml(read.ReadToEnd());
+                        var span =
+                            dc.DocumentNode.Descendants("span").Where(
+                                x => x.Id.ToLower().Contains("releasedownloadsliteral")).FirstOrDefault();
+                        MessageBox.Show(
+                            int.Parse(span.InnerHtml.ToLower().Replace("downloads", string.Empty).Trim()).ToString());
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error,
-                                MessageBoxResult.OK);
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error loading file: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error,
+                                    MessageBoxResult.OK);
+                }
             }
         }
 
@@ -232,12 +235,14 @@ namespace HAPExplorer
                 Cursor = Cursors.Wait;
                 var req = (HttpWebRequest)WebRequest.Create(dialog.Url);
                 using (var resp = req.GetResponse().GetResponseStream())
-                using (var read = new StreamReader(resp))
                 {
-                    var txt = read.ReadToEnd();
-                    txtHtml.Text = txt;
-                    _html.LoadHtml(txt);
-                    hapTree.BaseNode = _html.DocumentNode;
+                    using (var read = new StreamReader(resp))
+                    {
+                        var txt = read.ReadToEnd();
+                        txtHtml.Text = txt;
+                        _html.LoadHtml(txt);
+                        hapTree.BaseNode = _html.DocumentNode;
+                    }
                 }
             }
             catch (Exception ex)

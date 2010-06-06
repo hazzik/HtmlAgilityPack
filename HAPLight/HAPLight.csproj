@@ -137,6 +137,8 @@
     <Compile Include="..\HtmlAgilityPack\Utilities.cs">
       <Link>Utilities.cs</Link>
     </Compile>
+    <Compile Include="HtmlDocumentLoadCompleted.cs" />
+    <Compile Include="HtmlWeb.cs" />
     <Compile Include="SilverlightExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Trace.Silverlight.cs" />
