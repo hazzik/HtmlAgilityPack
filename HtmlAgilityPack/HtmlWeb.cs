@@ -1158,7 +1158,7 @@ namespace HtmlAgilityPack
         /// Loads an HTML document from an Internet resource and saves it to the specified XmlTextWriter.
         /// </summary>
         /// <param name="htmlUrl">The requested URL, such as "http://Myserver/Mypath/Myfile.asp".</param>
-        /// <param name="writer">The XmlTextWriter to which you want to save.</param>
+        /// <param name="writer">The XmlTextWriter to which you want to save to.</param>
         public void LoadHtmlAsXml(string htmlUrl, XmlTextWriter writer)
         {
             HtmlDocument doc = Load(htmlUrl);

@@ -13,9 +13,7 @@ namespace HtmlAgilityPack
     /// <summary>
     /// Represents an HTML attribute.
     /// </summary>
-#if !PocketPC
     [DebuggerDisplay("Name: {OriginalName}, Value: {Value}")]
-#endif
     public class HtmlAttribute : IComparable
     {
         #region Fields
@@ -72,7 +70,7 @@ namespace HtmlAgilityPack
             {
                 if (_name == null)
                 {
-                    _name = _ownerdocument._text.Substring(_namestartindex, _namelength);
+                    _name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
                 return _name.ToLower();
             }
@@ -141,7 +139,7 @@ namespace HtmlAgilityPack
             {
                 if (_value == null)
                 {
-                    _value = _ownerdocument._text.Substring(_valuestartindex, _valuelength);
+                    _value = _ownerdocument.Text.Substring(_valuestartindex, _valuelength);
                 }
                 return _value;
             }

@@ -145,6 +145,7 @@
       <Link>Utilities.cs</Link>
     </Compile>
     <Compile Include="CompactExtensions.cs" />
+    <Compile Include="DebuggerDisplayAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

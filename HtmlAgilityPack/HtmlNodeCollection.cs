@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace HtmlAgilityPack
 {
@@ -59,7 +58,11 @@ namespace HtmlAgilityPack
             get
             {
                 nodeName = nodeName.ToLower();
-                return _items.FirstOrDefault(t => t.Name.ToLower().Equals(nodeName));
+                for (int i = 0; i < _items.Count; i++)
+                    if (_items[i].Name.Equals(nodeName))
+                        return _items[i];
+
+                return null;
             }
         }
 
@@ -309,7 +312,7 @@ namespace HtmlAgilityPack
         {
             // TODO: should we rewrite this? what would be the key of a node?
             for (int i = 0; i < _items.Count; i++)
-                if (node == (_items[i]))
+                if (node == _items[i])
                     return i;
             return -1;
         }

@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Xml;
-using System.Xml.XPath;
+
 // ReSharper disable InconsistentNaming
 namespace HtmlAgilityPack
 {
     /// <summary>
     /// Represents an HTML node.
     /// </summary>
-#if !PocketPC
     [DebuggerDisplay("Name: {OriginalName}}")]
-#endif
     public partial class HtmlNode 
     {
         #region Fields
@@ -146,7 +144,7 @@ namespace HtmlAgilityPack
                     break;
             }
 
-            if (_ownerdocument._openednodes != null)
+            if (_ownerdocument.Openednodes != null)
             {
                 if (!Closed)
                 {
@@ -155,7 +153,7 @@ namespace HtmlAgilityPack
                     // -1 means the node comes from public
                     if (-1 != index)
                     {
-                        _ownerdocument._openednodes.Add(index, this);
+                        _ownerdocument.Openednodes.Add(index, this);
                     }
                 }
             }
@@ -346,7 +344,7 @@ namespace HtmlAgilityPack
                     return string.Empty;
                 }
 
-                return _ownerdocument._text.Substring(_innerstartindex, _innerlength);
+                return _ownerdocument.Text.Substring(_innerstartindex, _innerlength);
             }
             set
             {
@@ -429,7 +427,7 @@ namespace HtmlAgilityPack
             {
                 if (_name == null)
                 {
-                    Name = _ownerdocument._text.Substring(_namestartindex, _namelength);
+                    Name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
                 }
                 return _name != null ? _name.ToLower() : string.Empty;
             }
@@ -486,7 +484,7 @@ namespace HtmlAgilityPack
                     return string.Empty;
                 }
 
-                return _ownerdocument._text.Substring(_outerstartindex, _outerlength);
+                return _ownerdocument.Text.Substring(_outerstartindex, _outerlength);
             }
         }
 
@@ -1716,8 +1714,8 @@ namespace HtmlAgilityPack
             {
                 _endnode = endnode;
 
-                if (_ownerdocument._openednodes != null)
-                    _ownerdocument._openednodes.Remove(_outerstartindex);
+                if (_ownerdocument.Openednodes != null)
+                    _ownerdocument.Openednodes.Remove(_outerstartindex);
 
                 HtmlNode self = Utilities.GetDictionaryValueOrNull(_ownerdocument.Lastnodes,Name);
                 if (self == this)
