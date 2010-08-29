@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 
 namespace HtmlAgilityPack.Samples
 {
@@ -10,10 +9,8 @@ namespace HtmlAgilityPack.Samples
 		static void Main(string[] args)
 		{
 			HtmlWeb hw = new HtmlWeb();
-			
-			string url = @"http://www.savebigbucks.ca/";
+			string url = @"http://www.microsoft.com";
 			HtmlDocument doc = hw.Load(url);
-			var links = doc.DocumentNode.Descendants("a").Select(x => x.OuterHtml).ToList();
 			doc.Save("mshome.htm");
 
 			DocumentWithLinks nwl = new DocumentWithLinks(doc);
