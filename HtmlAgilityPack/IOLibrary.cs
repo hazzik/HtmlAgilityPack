@@ -15,7 +15,7 @@ namespace HtmlAgilityPack
             MakeWritable(target);
             File.Copy(source, target, true);
         }
-#if !PocketPC
+#if !PocketPC && !WINDOWS_PHONE
         internal static void MakeWritable(string path)
         {
             if (!File.Exists(path))
@@ -23,7 +23,7 @@ namespace HtmlAgilityPack
             File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
         }
 #else
-        internal static void MakeWritable(string path)
+		internal static void MakeWritable(string path)
         {
         }
 #endif
