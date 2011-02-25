@@ -132,4 +132,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q $(SolutionDir)Nuget\lib\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)Nuget\lib\</PostBuildEvent>
+  </PropertyGroup>
 </Project>
