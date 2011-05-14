@@ -21,8 +21,8 @@ namespace HtmlAgilityPack
                 outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName +
                                              "\"?>");
 #else
-                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName +
-                                      "\"?>");
+                outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName +
+                                "\"?>");
 #endif
                 // check there is a root element
                 if (_ownerdocument.DocumentNode.HasChildNodes)

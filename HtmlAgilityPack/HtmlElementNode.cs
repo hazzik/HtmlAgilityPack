@@ -20,22 +20,20 @@ namespace HtmlAgilityPack
             string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
             if (_ownerdocument.OptionOutputOriginalCase)
                 name = OriginalName;
+
             if (_ownerdocument.OptionOutputAsXml)
             {
-                if (name.Length > 0)
-                {
-                    if (name[0] == '?')
-                        // forget this one, it's been done at the document level
-                        return;
-
-                    if (name.Trim().Length == 0)
-                        return;
-                    name = HtmlDocument.GetXmlName(name);
-                }
-                else
+                if (string.IsNullOrWhiteSpace(name))
                     return;
+
+                if (name[0] == '?')
+                    // forget this one, it's been done at the document level
+                    return;
+
+                name = HtmlDocument.GetXmlName(name);
             }
-            outText.Write("<" + name);
+
+            outText.Write("<{0}", name);
             WriteAttributes(outText, false);
             if (HasChildNodes)
             {
@@ -60,30 +58,28 @@ namespace HtmlAgilityPack
                 else
                     WriteContentTo(outText);
 
-                outText.Write("</" + name);
+                outText.Write("</{0}", name);
                 if (!_ownerdocument.OptionOutputAsXml)
                     WriteAttributes(outText, true);
 
                 outText.Write(">");
             }
+            else if (IsEmptyElement(Name))
+            {
+                if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
+                    outText.Write(" />");
+                else
+                {
+                    if (Name.Length > 0 && Name[0] == '?')
+                        outText.Write("?");
+
+                    outText.Write(">");
+                }
+            }
             else
             {
-                if (IsEmptyElement(Name))
-                {
-                    if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
-                        outText.Write(" />");
-                    else
-                    {
-                        if (Name.Length > 0 && Name[0] == '?')
-                            outText.Write("?");
-
-                        outText.Write(">");
-                    }
-                }
-                else
-                    outText.Write("></" + name + ">");
+                outText.Write("></{0}>", name);
             }
-            return;
         }
     }
 }
