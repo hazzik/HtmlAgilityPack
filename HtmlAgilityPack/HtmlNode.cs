@@ -8,6 +8,8 @@ using System.Xml;
 // ReSharper disable InconsistentNaming
 namespace HtmlAgilityPack
 {
+    using System.Linq;
+
     /// <summary>
     /// Represents an HTML node.
     /// </summary>
@@ -21,7 +23,7 @@ namespace HtmlAgilityPack
         internal HtmlNode _endnode;
 
         internal bool _innerchanged;
-        internal string _innerhtml;
+        private string _innerhtml;
         internal int _innerlength;
         internal int _innerstartindex;
         internal int _line;
@@ -30,11 +32,11 @@ namespace HtmlAgilityPack
         internal int _namelength;
         internal int _namestartindex;
         internal HtmlNode _nextnode;
-        internal HtmlNodeType _nodetype;
+        private readonly HtmlNodeType _nodetype;
         internal bool _outerchanged;
-        internal string _outerhtml;
+        private string _outerhtml;
         internal int _outerlength;
-        internal int _outerstartindex;
+        internal readonly int _outerstartindex;
         internal HtmlDocument _ownerdocument;
         internal HtmlNode _parentnode;
         internal HtmlNode _prevnode;
@@ -177,7 +179,6 @@ namespace HtmlAgilityPack
                 }
                 return _attributes;
             }
-            internal set { _attributes = value; }
         }
 
         /// <summary>
@@ -186,7 +187,6 @@ namespace HtmlAgilityPack
         public HtmlNodeCollection ChildNodes
         {
             get { return _childnodes ?? (_childnodes = new HtmlNodeCollection(this)); }
-            internal set { _childnodes = value; }
         }
 
         /// <summary>
@@ -256,11 +256,7 @@ namespace HtmlAgilityPack
                     return false;
                 }
 
-                if (_childnodes.Count <= 0)
-                {
-                    return false;
-                }
-                return true;
+                return _childnodes.Any();
             }
         }
 
@@ -281,11 +277,7 @@ namespace HtmlAgilityPack
                     return false;
                 }
 
-                if (_endnode._attributes.Count <= 0)
-                {
-                    return false;
-                }
-                return true;
+                return _endnode._attributes.Any();
             }
         }
 
@@ -417,7 +409,6 @@ namespace HtmlAgilityPack
         public HtmlNodeType NodeType
         {
             get { return _nodetype; }
-            internal set { _nodetype = value; }
         }
 
         /// <summary>
@@ -538,7 +529,7 @@ namespace HtmlAgilityPack
         public static HtmlNode CreateNode(string html)
         {
             // REVIEW: this is *not* optimum...
-            HtmlDocument doc = new HtmlDocument();
+            var doc = new HtmlDocument();
             doc.LoadHtml(html);
             return doc.DocumentNode.FirstChild;
         }
@@ -718,7 +709,7 @@ namespace HtmlAgilityPack
         /// Adds the specified node to the end of the list of children of this node.
         /// </summary>
         /// <param name="newChildren">The node list to add. May not be null.</param>
-        public void AppendChildren(HtmlNodeCollection newChildren)
+        public void AppendChildren(IEnumerable<HtmlNode> newChildren)
         {
             if (newChildren == null)
                 throw new ArgumentNullException("newChildren");
@@ -1337,7 +1328,7 @@ namespace HtmlAgilityPack
         /// <returns>The saved string.</returns>
         public string WriteContentTo()
         {
-            StringWriter sw = new StringWriter();
+            var sw = new StringWriter();
             WriteContentTo(sw);
             sw.Flush();
             return sw.ToString();
@@ -1361,7 +1352,7 @@ namespace HtmlAgilityPack
         /// <returns>The saved string.</returns>
         public string WriteTo()
         {
-            using (StringWriter sw = new StringWriter())
+            using (var sw = new StringWriter())
             {
                 WriteTo(sw);
                 sw.Flush();
@@ -1399,7 +1390,7 @@ namespace HtmlAgilityPack
                             continue;
 
                         // create a fake closer node
-                        HtmlNode close = _ownerdocument.CreateNode(NodeType, -1);
+                        HtmlNode close = _ownerdocument.CreateNode(NodeType);
                         close._endnode = close;
                         child.CloseNode(close);
                     }
@@ -1472,7 +1463,7 @@ namespace HtmlAgilityPack
                     }
                 }
                 if (_ownerdocument.OptionOutputOptimizeAttributeValues)
-                    if (att.Value.IndexOfAny(new char[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
+                    if (att.Value.IndexOfAny(new[] {(char) 10, (char) 13, (char) 9, ' '}) < 0)
                         outText.Write(" " + name + "=" + att.Value);                    
                     else                    
                         outText.Write(" " + name + "=" + quote + att.Value + quote);                                    

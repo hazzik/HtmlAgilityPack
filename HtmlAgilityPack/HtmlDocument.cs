@@ -1704,8 +1704,8 @@ namespace HtmlAgilityPack
         {
             _currentnode._outerlength = index - _currentnode._outerstartindex;
 
-            if ((_currentnode._nodetype == HtmlNodeType.Text) ||
-                (_currentnode._nodetype == HtmlNodeType.Comment))
+            if ((_currentnode.NodeType == HtmlNodeType.Text) ||
+                (_currentnode.NodeType == HtmlNodeType.Comment))
             {
                 // forget about void nodes
                 if (_currentnode._outerlength > 0)
