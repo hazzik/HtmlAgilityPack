@@ -2,6 +2,8 @@
 
 namespace HtmlAgilityPack
 {
+    using System.IO;
+
     /// <summary>
     /// Represents an HTML text node.
     /// </summary>
@@ -56,6 +58,16 @@ namespace HtmlAgilityPack
         public override HtmlNode CloneNode(bool deep)
         {
             return new HtmlTextNode(_ownerdocument, -1) {Name = Name, Text = Text};
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified TextWriter.
+        /// </summary>
+        /// <param name="outText">The TextWriter to which you want to save.</param>
+        public override void WriteTo(TextWriter outText)
+        {
+            string html = Text;
+            outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncode(html) : html);
         }
     }
 }

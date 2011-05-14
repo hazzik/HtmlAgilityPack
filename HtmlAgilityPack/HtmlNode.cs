@@ -826,8 +826,6 @@ namespace HtmlAgilityPack
             }
         }
 
-
-
         /// <summary>
         /// Gets all Descendant nodes for this node and each of child nodes
         /// </summary>
@@ -1124,7 +1122,7 @@ namespace HtmlAgilityPack
         /// Adds the specified node list to the beginning of the list of children of this node.
         /// </summary>
         /// <param name="newChildren">The node list to add. May not be <c>null</c>.</param>
-        public void PrependChildren(HtmlNodeCollection newChildren)
+        public void PrependChildren(IEnumerable<HtmlNode> newChildren)
         {
             if (newChildren == null)
             {
@@ -1349,140 +1347,7 @@ namespace HtmlAgilityPack
         /// Saves the current node to the specified TextWriter.
         /// </summary>
         /// <param name="outText">The TextWriter to which you want to save.</param>
-        public void WriteTo(TextWriter outText)
-        {
-            string html;
-            switch (_nodetype)
-            {
-                case HtmlNodeType.Comment:
-                    html = ((HtmlCommentNode) this).Comment;
-                    if (_ownerdocument.OptionOutputAsXml)
-                        outText.Write("<!--" + GetXmlComment((HtmlCommentNode) this) + " -->");
-                    else
-                        outText.Write(html);
-                    break;
-
-                case HtmlNodeType.Document:
-                    if (_ownerdocument.OptionOutputAsXml)
-                    {
-#if SILVERLIGHT || PocketPC
-                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName +
-                                     "\"?>");
-#else
-                        outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName +
-                                      "\"?>");
-#endif
-                        // check there is a root element
-                        if (_ownerdocument.DocumentNode.HasChildNodes)
-                        {
-                            int rootnodes = _ownerdocument.DocumentNode._childnodes.Count;
-                            if (rootnodes > 0)
-                            {
-                                HtmlNode xml = _ownerdocument.GetXmlDeclaration();
-                                if (xml != null)
-                                    rootnodes --;
-
-                                if (rootnodes > 1)
-                                {
-                                    if (_ownerdocument.OptionOutputUpperCase)
-                                    {
-                                        outText.Write("<SPAN>");
-                                        WriteContentTo(outText);
-                                        outText.Write("</SPAN>");
-                                    }
-                                    else
-                                    {
-                                        outText.Write("<span>");
-                                        WriteContentTo(outText);
-                                        outText.Write("</span>");
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    WriteContentTo(outText);
-                    break;
-
-                case HtmlNodeType.Text:
-                    html = ((HtmlTextNode) this).Text;
-                    outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncode(html) : html);
-                    break;
-
-                case HtmlNodeType.Element:
-                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
-
-                    if (_ownerdocument.OptionOutputOriginalCase)
-                        name = OriginalName;
-
-                    if (_ownerdocument.OptionOutputAsXml)
-                    {
-                    	if (name.Length > 0)
-                    	{
-                    		if (name[0] == '?')
-                    			// forget this one, it's been done at the document level
-                    			break;
-
-                    		if (name.Trim().Length == 0)
-                    			break;
-                    		name = HtmlDocument.GetXmlName(name);
-                    	}
-                    	else
-                    		break;
-                    }
-
-                    outText.Write("<" + name);
-                    WriteAttributes(outText, false);
-
-            		if (HasChildNodes)
-            		{
-            			outText.Write(">");
-            			bool cdata = false;
-            			if (_ownerdocument.OptionOutputAsXml && IsCDataElement(Name))
-            			{
-            				// this code and the following tries to output things as nicely as possible for old browsers.
-            				cdata = true;
-            				outText.Write("\r\n//<![CDATA[\r\n");
-            			}
-
-
-            			if (cdata)
-            			{
-            				if (HasChildNodes)
-            					// child must be a text
-            					ChildNodes[0].WriteTo(outText);
-
-            				outText.Write("\r\n//]]>//\r\n");
-            			}
-            			else
-            				WriteContentTo(outText);
-
-            			outText.Write("</" + name);
-            			if (!_ownerdocument.OptionOutputAsXml)
-            				WriteAttributes(outText, true);
-
-            			outText.Write(">");
-            		}
-            		else
-            		{
-            			if (IsEmptyElement(Name))
-            			{
-            				if ((_ownerdocument.OptionWriteEmptyNodes) || (_ownerdocument.OptionOutputAsXml))
-            					outText.Write(" />");
-            				else
-            				{
-            					if (Name.Length > 0 && Name[0] == '?')
-            						outText.Write("?");
-
-            					outText.Write(">");
-            				}
-            			}
-            			else
-            				outText.Write("></" + name + ">");
-            		}
-            		break;
-            }
-        }
+        public abstract void WriteTo(TextWriter outText);
 
         /// <summary>
         /// Saves the current node to the specified XmlWriter.

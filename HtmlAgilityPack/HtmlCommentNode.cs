@@ -2,6 +2,8 @@
 
 namespace HtmlAgilityPack
 {
+    using System.IO;
+
     /// <summary>
     /// Represents an HTML comment.
     /// </summary>
@@ -61,6 +63,18 @@ namespace HtmlAgilityPack
         public override HtmlNode CloneNode(bool deep)
         {
             return new HtmlCommentNode(_ownerdocument, -1) {Name = Name, Comment = Comment};
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified TextWriter.
+        /// </summary>
+        /// <param name="outText">The TextWriter to which you want to save.</param>
+        public override void WriteTo(TextWriter outText)
+        {
+            if (_ownerdocument.OptionOutputAsXml)
+                outText.Write("<!--{0} -->", GetXmlComment(this));
+            else
+                outText.Write(Comment);
         }
     }
 }
