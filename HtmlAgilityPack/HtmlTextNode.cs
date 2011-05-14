@@ -1,4 +1,5 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
+
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -6,23 +7,12 @@ namespace HtmlAgilityPack
     /// </summary>
     public class HtmlTextNode : HtmlNode
     {
-        #region Fields
-
         private string _text;
 
-        #endregion
-
-        #region Constructors
-
         internal HtmlTextNode(HtmlDocument ownerdocument, int index)
-            :
-                base(HtmlNodeType.Text, ownerdocument, index)
+            : base(HtmlNodeType.Text, ownerdocument, index)
         {
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or Sets the HTML between the start and end tags of the object. In the case of a text node, it is equals to OuterHtml.
@@ -38,14 +28,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public override string OuterHtml
         {
-            get
-            {
-                if (_text == null)
-                {
-                    return base.OuterHtml;
-                }
-                return _text;
-            }
+            get { return _text ?? base.OuterHtml; }
         }
 
         /// <summary>
@@ -53,17 +36,16 @@ namespace HtmlAgilityPack
         /// </summary>
         public string Text
         {
-            get
-            {
-                if (_text == null)
-                {
-                    return base.OuterHtml;
-                }
-                return _text;
-            }
+            get { return _text ?? base.OuterHtml; }
             set { _text = value; }
         }
 
-        #endregion
+        /// <summary>
+        /// Gets or Sets the text between the start and end tags of the object.
+        /// </summary>
+        public override string InnerText
+        {
+            get { return Text; }
+        }
     }
 }

@@ -355,35 +355,7 @@ namespace HtmlAgilityPack
         /// <summary>
         /// Gets or Sets the text between the start and end tags of the object.
         /// </summary>
-        public virtual string InnerText
-        {
-            get
-            {
-                if (_nodetype == HtmlNodeType.Text)
-                {
-                    return ((HtmlTextNode) this).Text;
-                }
-
-                if (_nodetype == HtmlNodeType.Comment)
-                {
-                    return ((HtmlCommentNode) this).Comment;
-                }
-
-                // note: right now, this method is *slow*, because we recompute everything.
-                // it could be optimised like innerhtml
-                if (!HasChildNodes)
-                {
-                    return string.Empty;
-                }
-
-                string s = null;
-                foreach (HtmlNode node in ChildNodes)
-                {
-                    s += node.InnerText;
-                }
-                return s;
-            }
-        }
+        public abstract string InnerText { get; }
 
         /// <summary>
         /// Gets the last child of the node.

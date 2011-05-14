@@ -1,4 +1,5 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
+
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -6,37 +7,19 @@ namespace HtmlAgilityPack
     /// </summary>
     public class HtmlCommentNode : HtmlNode
     {
-        #region Fields
-
         private string _comment;
 
-        #endregion
-
-        #region Constructors
-
         internal HtmlCommentNode(HtmlDocument ownerdocument, int index)
-            :
-                base(HtmlNodeType.Comment, ownerdocument, index)
+            : base(HtmlNodeType.Comment, ownerdocument, index)
         {
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets or Sets the comment text of the node.
         /// </summary>
         public string Comment
         {
-            get
-            {
-                if (_comment == null)
-                {
-                    return base.InnerHtml;
-                }
-                return _comment;
-            }
+            get { return _comment ?? base.InnerHtml; }
             set { _comment = value; }
         }
 
@@ -45,14 +28,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public override string InnerHtml
         {
-            get
-            {
-                if (_comment == null)
-                {
-                    return base.InnerHtml;
-                }
-                return _comment;
-            }
+            get { return _comment ?? base.InnerHtml; }
             set { _comment = value; }
         }
 
@@ -63,14 +39,18 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_comment == null)
-                {
-                    return base.OuterHtml;
-                }
-                return "<!--" + _comment + "-->";
+                return _comment == null
+                           ? base.OuterHtml
+                           : string.Format("<!--{0}-->", _comment);
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Gets or Sets the text between the start and end tags of the object.
+        /// </summary>
+        public override string InnerText
+        {
+            get { return Comment; }
+        }
     }
 }
