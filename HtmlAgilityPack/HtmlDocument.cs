@@ -918,7 +918,7 @@ namespace HtmlAgilityPack
                     return new HtmlTextNode(this, index);
 
                 default:
-                    return new HtmlNode(type, this, index);
+                    return new HtmlElementNode(type, this, index);
             }
         }
 

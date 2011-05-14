@@ -76,6 +76,9 @@
     <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
       <Link>HtmlElementFlag.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementNode.cs">
+      <Link>HtmlElementNode.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlEntity.cs">
       <Link>HtmlEntity.cs</Link>
     </Compile>

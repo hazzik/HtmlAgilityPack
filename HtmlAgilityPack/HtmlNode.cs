@@ -12,7 +12,7 @@ namespace HtmlAgilityPack
     /// Represents an HTML node.
     /// </summary>
     [DebuggerDisplay("Name: {OriginalName}}")]
-    public partial class HtmlNode 
+    public abstract partial class HtmlNode 
     {
         #region Fields
 
@@ -118,7 +118,7 @@ namespace HtmlAgilityPack
         /// <param name="type"></param>
         /// <param name="ownerdocument"></param>
         /// <param name="index"></param>
-        public HtmlNode(HtmlNodeType type, HtmlDocument ownerdocument, int index)
+        protected HtmlNode(HtmlNodeType type, HtmlDocument ownerdocument, int index)
         {
             _nodetype = type;
             _ownerdocument = ownerdocument;

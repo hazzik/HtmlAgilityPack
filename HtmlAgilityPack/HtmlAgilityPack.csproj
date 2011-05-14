@@ -77,6 +77,7 @@
     <Compile Include="HtmlConsoleListener.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlElementFlag.cs" />
+    <Compile Include="HtmlElementNode.cs" />
     <Compile Include="HtmlNameTable.cs" />
     <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
