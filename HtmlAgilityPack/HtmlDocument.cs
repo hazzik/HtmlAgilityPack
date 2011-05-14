@@ -912,9 +912,17 @@ namespace HtmlAgilityPack
             {
                 return new HtmlTextNode(this, index);
             }
+            else if (type == HtmlNodeType.Element)
+            {
+                return new HtmlElementNode(this, index);
+            }
+            if (type == HtmlNodeType.Document)
+            {
+                return new HtmlDocumentNode(this, index);
+            }
             else
             {
-                return new HtmlElementNode(type, this, index);
+                throw new NotSupportedException();
             }
         }
 
