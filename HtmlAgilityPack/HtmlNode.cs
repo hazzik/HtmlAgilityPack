@@ -69,8 +69,6 @@ namespace HtmlAgilityPack
 
         #endregion
 
-        #region Constructors
-
         /// <summary>
         /// Initialize HtmlNode. Builds a list of all tags that have special allowances
         /// </summary>
@@ -163,8 +161,6 @@ namespace HtmlAgilityPack
             _outerchanged = true;
             _innerchanged = true;
         }
-
-        #endregion
 
         #region Properties
 
@@ -1682,7 +1678,7 @@ namespace HtmlAgilityPack
                             continue;
 
                         // create a fake closer node
-                        HtmlNode close = new HtmlNode(NodeType, _ownerdocument, -1);
+                        HtmlNode close = _ownerdocument.CreateNode(NodeType, -1);
                         close._endnode = close;
                         child.CloseNode(close);
                     }

@@ -1160,7 +1160,7 @@ namespace HtmlAgilityPack
 
             // ok we need to close the prev now
             // create a fake closer node
-            HtmlNode close = new HtmlNode(prev.NodeType, this, -1);
+            HtmlNode close = CreateNode(prev.NodeType - 1);
             close._endnode = close;
             prev.CloseNode(close);
         }
