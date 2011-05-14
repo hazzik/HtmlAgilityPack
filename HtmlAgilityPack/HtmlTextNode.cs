@@ -3,6 +3,7 @@
 namespace HtmlAgilityPack
 {
     using System.IO;
+    using System.Xml;
 
     /// <summary>
     /// Represents an HTML text node.
@@ -68,6 +69,15 @@ namespace HtmlAgilityPack
         {
             string html = Text;
             outText.Write(_ownerdocument.OptionOutputAsXml ? HtmlDocument.HtmlEncode(html) : html);
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified XmlWriter.
+        /// </summary>
+        /// <param name="writer">The XmlWriter to which you want to save.</param>
+        public override void WriteTo(XmlWriter writer)
+        {
+            writer.WriteString(Text);
         }
     }
 }

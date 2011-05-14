@@ -3,6 +3,7 @@
 namespace HtmlAgilityPack
 {
     using System.IO;
+    using System.Xml;
 
     /// <summary>
     /// Represents an HTML comment.
@@ -75,6 +76,21 @@ namespace HtmlAgilityPack
                 outText.Write("<!--{0} -->", GetXmlComment(this));
             else
                 outText.Write(Comment);
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified XmlWriter.
+        /// </summary>
+        /// <param name="writer">The XmlWriter to which you want to save.</param>
+        public override void WriteTo(XmlWriter writer)
+        {
+            writer.WriteComment(GetXmlComment(this));
+        }
+
+        private static string GetXmlComment(HtmlCommentNode comment)
+        {
+            string s = comment.Comment;
+            return s.Substring(4, s.Length - 7).Replace("--", " - -");
         }
     }
 }

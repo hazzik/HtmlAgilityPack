@@ -3,6 +3,7 @@ using System;
 namespace HtmlAgilityPack
 {
     using System.IO;
+    using System.Xml;
 
     internal class HtmlElementNode : HtmlElementNodeBase
     {
@@ -80,6 +81,30 @@ namespace HtmlAgilityPack
             {
                 outText.Write("></{0}>", name);
             }
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified XmlWriter.
+        /// </summary>
+        /// <param name="writer">The XmlWriter to which you want to save.</param>
+        public override void WriteTo(XmlWriter writer)
+        {
+            string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
+
+            if (_ownerdocument.OptionOutputOriginalCase)
+                name = OriginalName;
+
+            writer.WriteStartElement(name);
+            WriteAttributes(writer, this);
+
+            if (HasChildNodes)
+            {
+                foreach (HtmlNode subnode in ChildNodes)
+                {
+                    subnode.WriteTo(writer);
+                }
+            }
+            writer.WriteEndElement();
         }
     }
 }

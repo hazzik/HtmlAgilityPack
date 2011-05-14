@@ -1353,59 +1353,7 @@ namespace HtmlAgilityPack
         /// Saves the current node to the specified XmlWriter.
         /// </summary>
         /// <param name="writer">The XmlWriter to which you want to save.</param>
-        public void WriteTo(XmlWriter writer)
-        {
-            switch (_nodetype)
-            {
-                case HtmlNodeType.Comment:
-                    writer.WriteComment(GetXmlComment((HtmlCommentNode) this));
-                    break;
-
-                case HtmlNodeType.Document:
-                    #if SILVERLIGHT || PocketPC
-                        writer.WriteProcessingInstruction("xml",
-                                                      "version=\"1.0\" encoding=\"" +
-                                                      _ownerdocument.GetOutEncoding().WebName + "\"");
-#else
-                         writer.WriteProcessingInstruction("xml",
-                                                      "version=\"1.0\" encoding=\"" +
-                                                      _ownerdocument.GetOutEncoding().BodyName + "\"");
-#endif
-
-                    if (HasChildNodes)
-                    {
-                        foreach (HtmlNode subnode in ChildNodes)
-                        {
-                            subnode.WriteTo(writer);
-                        }
-                    }
-                    break;
-
-                case HtmlNodeType.Text:
-                    string html = ((HtmlTextNode) this).Text;
-                    writer.WriteString(html);
-                    break;
-
-                case HtmlNodeType.Element:
-                    string name = _ownerdocument.OptionOutputUpperCase ? Name.ToUpper() : Name;
-
-                    if (_ownerdocument.OptionOutputOriginalCase)
-                        name = OriginalName;
-
-                    writer.WriteStartElement(name);
-                    WriteAttributes(writer, this);
-
-                    if (HasChildNodes)
-                    {
-                        foreach (HtmlNode subnode in ChildNodes)
-                        {
-                            subnode.WriteTo(writer);
-                        }
-                    }
-                    writer.WriteEndElement();
-                    break;
-            }
-        }
+        public abstract void WriteTo(XmlWriter writer);
 
         /// <summary>
         /// Saves the current node to a string.
@@ -1424,12 +1372,6 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Internal Methods
-
-        internal static string GetXmlComment(HtmlCommentNode comment)
-        {
-            string s = comment.Comment;
-            return s.Substring(4, s.Length - 7).Replace("--", " - -");
-        }
 
         internal static void WriteAttributes(XmlWriter writer, HtmlNode node)
         {

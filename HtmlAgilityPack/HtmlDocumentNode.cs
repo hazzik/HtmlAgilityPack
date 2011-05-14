@@ -1,6 +1,7 @@
 namespace HtmlAgilityPack
 {
     using System.IO;
+    using System.Xml;
 
     internal class HtmlDocumentNode : HtmlElementNodeBase
     {
@@ -17,13 +18,7 @@ namespace HtmlAgilityPack
         {
             if (_ownerdocument.OptionOutputAsXml)
             {
-#if SILVERLIGHT || PocketPC
-                outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName +
-                                             "\"?>");
-#else
-                outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().BodyName +
-                                "\"?>");
-#endif
+                outText.Write("<?xml version=\"1.0\" encoding=\"{0}\"?>", EncodingName());
                 // check there is a root element
                 if (_ownerdocument.DocumentNode.HasChildNodes)
                 {
@@ -55,6 +50,33 @@ namespace HtmlAgilityPack
             }
             WriteContentTo(outText);
             return;
+        }
+
+        /// <summary>
+        /// Saves the current node to the specified XmlWriter.
+        /// </summary>
+        /// <param name="writer">The XmlWriter to which you want to save.</param>
+        public override void WriteTo(XmlWriter writer)
+        {
+            writer.WriteProcessingInstruction("xml", string.Format("version=\"1.0\" encoding=\"{0}\"", EncodingName()));
+
+            if (HasChildNodes)
+            {
+                foreach (HtmlNode subnode in ChildNodes)
+                {
+                    subnode.WriteTo(writer);
+                }
+            }
+        }
+
+        private string EncodingName()
+        {
+#if SILVERLIGHT || PocketPC
+            var encodingName = _ownerdocument.GetOutEncoding().WebName;
+#else
+            var encodingName = _ownerdocument.GetOutEncoding().BodyName;
+#endif
+            return encodingName;
         }
     }
 }
