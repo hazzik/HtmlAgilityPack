@@ -47,5 +47,15 @@ namespace HtmlAgilityPack
         {
             get { return Text; }
         }
+
+        /// <summary>
+        /// Creates a duplicate of the node.
+        /// </summary>
+        /// <param name="deep">true to recursively clone the subtree under the specified node; false to clone only the node itself.</param>
+        /// <returns>The cloned node.</returns>
+        public override HtmlNode CloneNode(bool deep)
+        {
+            return new HtmlTextNode(_ownerdocument, -1) {Name = Name, Text = Text};
+        }
     }
 }

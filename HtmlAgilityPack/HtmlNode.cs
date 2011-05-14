@@ -507,11 +507,6 @@ namespace HtmlAgilityPack
 
         #endregion
 
-        #region IXPathNavigable Members
-
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>
@@ -786,60 +781,7 @@ namespace HtmlAgilityPack
         /// </summary>
         /// <param name="deep">true to recursively clone the subtree under the specified node; false to clone only the node itself.</param>
         /// <returns>The cloned node.</returns>
-        public HtmlNode CloneNode(bool deep)
-        {
-            HtmlNode node = _ownerdocument.CreateNode(_nodetype);
-            node.Name = Name;
-
-            switch (_nodetype)
-            {
-                case HtmlNodeType.Comment:
-                    ((HtmlCommentNode) node).Comment = ((HtmlCommentNode) this).Comment;
-                    return node;
-
-                case HtmlNodeType.Text:
-                    ((HtmlTextNode) node).Text = ((HtmlTextNode) this).Text;
-                    return node;
-            }
-
-            // attributes
-            if (HasAttributes)
-            {
-                foreach (HtmlAttribute att in _attributes)
-                {
-                    HtmlAttribute newatt = att.Clone();
-                    node.Attributes.Append(newatt);
-                }
-            }
-
-            // closing attributes
-            if (HasClosingAttributes)
-            {
-                node._endnode = _endnode.CloneNode(false);
-                foreach (HtmlAttribute att in _endnode._attributes)
-                {
-                    HtmlAttribute newatt = att.Clone();
-                    node._endnode._attributes.Append(newatt);
-                }
-            }
-            if (!deep)
-            {
-                return node;
-            }
-
-            if (!HasChildNodes)
-            {
-                return node;
-            }
-
-            // child nodes
-            foreach (HtmlNode child in _childnodes)
-            {
-                HtmlNode newchild = child.Clone();
-                node.AppendChild(newchild);
-            }
-            return node;
-        }
+        public abstract HtmlNode CloneNode(bool deep);
 
         /// <summary>
         /// Creates a duplicate of the node and the subtree under it.

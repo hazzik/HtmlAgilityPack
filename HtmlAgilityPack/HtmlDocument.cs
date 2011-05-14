@@ -902,23 +902,19 @@ namespace HtmlAgilityPack
             return new HtmlAttribute(this);
         }
 
-        internal HtmlNode CreateNode(HtmlNodeType type)
+        internal HtmlNode CreateNode(HtmlNodeType type, int index = -1)
         {
-            return CreateNode(type, -1);
-        }
-
-        internal HtmlNode CreateNode(HtmlNodeType type, int index)
-        {
-            switch (type)
+            if (type == HtmlNodeType.Comment)
             {
-                case HtmlNodeType.Comment:
-                    return new HtmlCommentNode(this, index);
-
-                case HtmlNodeType.Text:
-                    return new HtmlTextNode(this, index);
-
-                default:
-                    return new HtmlElementNode(type, this, index);
+                return new HtmlCommentNode(this, index);
+            }
+            else if (type == HtmlNodeType.Text)
+            {
+                return new HtmlTextNode(this, index);
+            }
+            else
+            {
+                return new HtmlElementNode(type, this, index);
             }
         }
 
