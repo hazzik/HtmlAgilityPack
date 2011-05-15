@@ -29,12 +29,7 @@
         <WRAP_LIMIT>400</WRAP_LIMIT>
       </FormatSettings>
       <UsingsSettings>
-        <KeepImports IsNull="False">
-          <Item>System</Item>
-        </KeepImports>
-        <MandatoryImports IsNull="False">
-          <Item>System</Item>
-        </MandatoryImports>
+        <AddImportsToDeepestScope>True</AddImportsToDeepestScope>
       </UsingsSettings>
       <Naming2>
         <EventHandlerPatternLong>$object$_On$event$</EventHandlerPatternLong>
@@ -113,4 +108,46 @@
       <Abbreviation Text="GMT" />
     </Naming2>
   </CodeStyleSettings>
+  <CustomStructuralPatterns>
+    <Pattern Severity="WARNING" FormatAfterReplace="True" ShortenReferences="True" Language="CSHARP">
+      <ReplacePattern>$x$.Any()</ReplacePattern>
+      <SearchPattern><![CDATA[$x$.Count > 0]]></SearchPattern>
+      <Params />
+      <Placeholders>
+        <ExpressionPlaceholder Name="x" ExpressionType="System.Collections.IEnumerable" ExactType="False" />
+      </Placeholders>
+    </Pattern>
+    <Pattern Severity="WARNING" FormatAfterReplace="True" ShortenReferences="True" Language="CSHARP">
+      <ReplacePattern>$x$.Any()</ReplacePattern>
+      <SearchPattern>$x$.Count != 0</SearchPattern>
+      <Params />
+      <Placeholders>
+        <ExpressionPlaceholder Name="x" ExpressionType="System.Collections.IEnumerable" ExactType="False" />
+      </Placeholders>
+    </Pattern>
+    <Pattern Severity="WARNING" FormatAfterReplace="True" ShortenReferences="True" Language="CSHARP">
+      <ReplacePattern>!$x$.Any()</ReplacePattern>
+      <SearchPattern><![CDATA[$x$.Count <= 0]]></SearchPattern>
+      <Params />
+      <Placeholders>
+        <ExpressionPlaceholder Name="x" ExpressionType="System.Collections.IEnumerable" ExactType="False" />
+      </Placeholders>
+    </Pattern>
+    <Pattern Severity="WARNING" FormatAfterReplace="True" ShortenReferences="True" Language="CSHARP">
+      <ReplacePattern>!$x$.Any()</ReplacePattern>
+      <SearchPattern><![CDATA[$x$.Count < 0]]></SearchPattern>
+      <Params />
+      <Placeholders>
+        <ExpressionPlaceholder Name="x" ExpressionType="System.Collections.IEnumerable" ExactType="False" />
+      </Placeholders>
+    </Pattern>
+    <Pattern Severity="WARNING" FormatAfterReplace="True" ShortenReferences="True" Language="CSHARP">
+      <ReplacePattern>!$x$.Any()</ReplacePattern>
+      <SearchPattern>$x$.Count == 0</SearchPattern>
+      <Params />
+      <Placeholders>
+        <ExpressionPlaceholder Name="x" ExpressionType="System.Collections.IEnumerable" ExactType="False" />
+      </Placeholders>
+    </Pattern>
+  </CustomStructuralPatterns>
 </Configuration>
