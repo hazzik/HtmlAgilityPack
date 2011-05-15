@@ -16,7 +16,7 @@ namespace HtmlAgilityPack
 
         private static readonly int _maxEntitySize;
         private static Dictionary<int,string> _entityName;
-        private static Dictionary<string, int> _entityValue;
+        private static readonly Dictionary<string, int> _entityValue;
 
         /// <summary>
         /// A collection of entities indexed by name.
@@ -643,8 +643,7 @@ namespace HtmlAgilityPack
                                     {
                                         // named entity?
                                         int code;
-                                        object o = _entityValue[entity.ToString()];
-                                        if (o == null)
+                                        if(_entityValue.TryGetValue(entity.ToString(), out code)==false) 
                                         {
                                             // nope
                                             sb.Append("&" + entity + ";");
@@ -652,7 +651,6 @@ namespace HtmlAgilityPack
                                         else
                                         {
                                             // we found one
-                                            code = (int) o;
                                             sb.Append(Convert.ToChar(code));
                                         }
                                     }
