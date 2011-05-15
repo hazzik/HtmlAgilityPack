@@ -37,7 +37,7 @@ namespace HtmlAgilityPack
         private string _outerhtml;
         internal int _outerlength;
         internal readonly int _outerstartindex;
-        internal HtmlDocument _ownerdocument;
+        internal readonly HtmlDocument _ownerdocument;
         internal HtmlNode _parentnode;
         internal HtmlNode _prevnode;
         internal HtmlNode _prevwithsamename;
@@ -236,11 +236,7 @@ namespace HtmlAgilityPack
                     return false;
                 }
 
-                if (_attributes.Count <= 0)
-                {
-                    return false;
-                }
-                return true;
+                return _attributes.Any();
             }
         }
 
@@ -336,7 +332,7 @@ namespace HtmlAgilityPack
             }
             set
             {
-                HtmlDocument doc = new HtmlDocument();
+                var doc = new HtmlDocument();
                 doc.LoadHtml(value);
 
                 RemoveAllChildren();
@@ -453,7 +449,6 @@ namespace HtmlAgilityPack
         public HtmlDocument OwnerDocument
         {
             get { return _ownerdocument; }
-            internal set { _ownerdocument = value; }
         }
 
         /// <summary>
@@ -846,10 +841,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlNode> Descendants()
         {
-            foreach (HtmlNode node in DescendantNodes())
-            {
-                yield return node;
-            }
+            return DescendantNodes();
         }
 
         /// <summary>
@@ -859,9 +851,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlNode> Descendants(string name)
         {
-            foreach (HtmlNode node in Descendants())
-                if (node.Name == name)
-                    yield return node;
+            return Descendants().Where(node => node.Name == name);
         }
 
         /// <summary>
@@ -871,12 +861,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> DescendantsAndSelf()
         {
             yield return this;
-            foreach (HtmlNode n in DescendantNodes())
-            {
-                HtmlNode el = n;
-                if (el != null)
-                    yield return el;
-            }
+            foreach (HtmlNode el in DescendantNodes().Where(el => el != null))
+                yield return el;
         }
 
         /// <summary>
@@ -887,9 +873,8 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlNode> DescendantsAndSelf(string name)
         {
             yield return this;
-            foreach (HtmlNode node in Descendants())
-                if (node.Name == name)
-                    yield return node;
+            foreach (HtmlNode node in Descendants().Where(node => node.Name == name))
+                yield return node;
         }
 
         /// <summary>
@@ -899,10 +884,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public HtmlNode Element(string name)
         {
-            foreach (HtmlNode node in ChildNodes)
-                if (node.Name == name)
-                    return node;
-            return null;
+            return ChildNodes.FirstOrDefault(node => node.Name == name);
         }
 
         /// <summary>
@@ -912,9 +894,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlNode> Elements(string name)
         {
-            foreach (HtmlNode node in ChildNodes)
-                if (node.Name == name)
-                    yield return node;
+            return ChildNodes.Where(node => node.Name == name);
         }
 
         /// <summary>
@@ -1423,13 +1403,13 @@ namespace HtmlAgilityPack
             }
         }
 
-        internal string GetId()
+        private string GetId()
         {
             HtmlAttribute att = Attributes["id"];
             return att == null ? string.Empty : att.Value;
         }
 
-        internal void SetId(string id)
+        private void SetId(string id)
         {
             HtmlAttribute att = Attributes["id"] ?? _ownerdocument.CreateAttribute("id");
             att.Value = id;
@@ -1437,7 +1417,7 @@ namespace HtmlAgilityPack
             _outerchanged = true;
         }
 
-        internal void WriteAttribute(TextWriter outText, HtmlAttribute att)
+        private void WriteAttribute(TextWriter outText, HtmlAttribute att)
         {
             string name;
             string quote = att.QuoteType == AttributeValueQuote.DoubleQuote ? "\"" : "'";
@@ -1533,17 +1513,8 @@ namespace HtmlAgilityPack
             if (NodeType == HtmlNodeType.Document)
                 return string.Empty;
 
-            int i = 1;
-            foreach (HtmlNode node in ParentNode.ChildNodes)
-            {
-                if (node.Name != Name) continue;
-
-                if (node == this)
-                    break;
-
-                i++;
-            }
-            return Name + "[" + i + "]";
+            int i = 1 + ParentNode.ChildNodes.Where(node => node.Name == Name).TakeWhile(node => node != this).Count();
+            return string.Format("{0}[{1}]", Name, i);
         }
 
         #endregion

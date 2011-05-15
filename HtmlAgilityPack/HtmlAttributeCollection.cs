@@ -5,6 +5,8 @@ using System.Collections.Generic;
 
 namespace HtmlAgilityPack
 {
+    using System.Linq;
+
     /// <summary>
     /// Represents a combined list and collection of HTML nodes.
     /// </summary>
@@ -248,12 +250,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public bool Contains(string name)
         {
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i].Name.Equals(name.ToLower()))
-                    return true;
-            }
-            return false;
+            return items.Any(t => t.Name.Equals(name.ToLower()));
         }
 
         /// <summary>
@@ -331,11 +328,7 @@ namespace HtmlAgilityPack
         public IEnumerable<HtmlAttribute> AttributesWithName(string attributeName)
         {
             attributeName = attributeName.ToLower();
-            for (int i = 0; i < items.Count; i++)
-            {
-                if (items[i].Name.Equals(attributeName))
-                    yield return items[i];
-            }
+            return items.Where(t => t.Name.Equals(attributeName));
         }
 
         /// <summary>
@@ -360,7 +353,7 @@ namespace HtmlAgilityPack
             items.Clear();
         }
 
-        internal int GetAttributeIndex(HtmlAttribute attribute)
+        private int GetAttributeIndex(HtmlAttribute attribute)
         {
             if (attribute == null)
             {

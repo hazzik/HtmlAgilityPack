@@ -8,6 +8,8 @@ using System.Xml;
 
 namespace HtmlAgilityPack
 {
+    using System.Linq;
+
     /// <summary>
     /// Represents a complete HTML document.
     /// </summary>
@@ -60,8 +62,6 @@ namespace HtmlAgilityPack
         /// Defines if a checksum must be computed for the document while parsing. Default is false.
         /// </summary>
         public bool OptionComputeChecksum;
-
-
 
         /// <summary>
         /// Defines the default stream encoding to use. Default is System.Text.Encoding.Default.
@@ -148,7 +148,7 @@ namespace HtmlAgilityPack
         {
             _documentnode = CreateNode(HtmlNodeType.Document, 0);
 #if SILVERLIGHT
-            OptionDefaultStreamEncoding =Encoding.UTF8;
+            OptionDefaultStreamEncoding = Encoding.UTF8;
 #else
             OptionDefaultStreamEncoding = Encoding.Default;
 #endif
@@ -228,12 +228,6 @@ namespace HtmlAgilityPack
 
         #endregion
 
-        #region IXPathNavigable Members
-
-
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>
@@ -259,7 +253,7 @@ namespace HtmlAgilityPack
                 else
                 {
                     nameisok = false;
-                    byte[] bytes = Encoding.UTF8.GetBytes(new char[] { name[i] });
+                    byte[] bytes = Encoding.UTF8.GetBytes(new[] { name[i] });
                     for (int j = 0; j < bytes.Length; j++)
                     {
                         xmlname += bytes[j].ToString("x2");
@@ -297,11 +291,7 @@ namespace HtmlAgilityPack
         /// <returns>true if if the specified character is considered as a whitespace character.</returns>
         public static bool IsWhiteSpace(int c)
         {
-            if ((c == 10) || (c == 13) || (c == 32) || (c == 9))
-            {
-                return true;
-            }
-            return false;
+            return (c == 10) || (c == 13) || (c == 32) || (c == 9);
         }
 
         /// <summary>
@@ -897,7 +887,7 @@ namespace HtmlAgilityPack
 
         #region Internal Methods
 
-        internal HtmlAttribute CreateAttribute()
+        private HtmlAttribute CreateAttribute()
         {
             return new HtmlAttribute(this);
         }
@@ -937,11 +927,7 @@ namespace HtmlAgilityPack
             if (!_documentnode.HasChildNodes)
                 return null;
 
-            foreach (HtmlNode node in _documentnode._childnodes)
-                if (node.Name == "?xml") // it's ok, names are case sensitive
-                    return node;
-
-            return null;
+            return _documentnode._childnodes.FirstOrDefault(node => node.Name == "?xml");
         }
 
         internal void SetIdForNode(HtmlNode node, string id)
@@ -977,7 +963,7 @@ namespace HtmlAgilityPack
 
         private void AddError(HtmlParseErrorCode code, int line, int linePosition, int streamPosition, string sourceText, string reason)
         {
-            HtmlParseError err = new HtmlParseError(code, line, linePosition, streamPosition, sourceText, reason);
+            var err = new HtmlParseError(code, line, linePosition, streamPosition, sourceText, reason);
             _parseerrors.Add(err);
             return;
         }
@@ -1002,7 +988,7 @@ namespace HtmlAgilityPack
                     if (_lastparentnode != null)
                     {
                         HtmlNode foundNode = null;
-                        Stack<HtmlNode> futureChild = new Stack<HtmlNode>();
+                        var futureChild = new Stack<HtmlNode>();
                         for (HtmlNode node = _lastparentnode.LastChild; node != null; node = node.PreviousSibling)
                         {
                             if ((node.Name == _currentnode.Name) && (!node.HasChildNodes))
@@ -1135,20 +1121,12 @@ namespace HtmlAgilityPack
             return resetter._streamposition < node._streamposition ? null : resetter;
         }
 
-        private bool FindResetterNodes(HtmlNode node, string[] names)
+        private bool FindResetterNodes(HtmlNode node, IEnumerable<string> names)
         {
-            if (names == null)
-                return false;
-
-            for (int i = 0; i < names.Length; i++)
-            {
-                if (FindResetterNode(node) != null)
-                    return true;
-            }
-            return false;
+            return names != null && names.Any(t => FindResetterNode(node) != null);
         }
 
-        private void FixNestedTag(string name, string[] resetters)
+        private void FixNestedTag(string name, IEnumerable<string> resetters)
         {
             if (resetters == null)
                 return;
@@ -1184,14 +1162,14 @@ namespace HtmlAgilityPack
             switch (name)
             {
                 case "li":
-                    return new string[] { "ul" };
+                    return new[] { "ul" };
 
                 case "tr":
-                    return new string[] { "table" };
+                    return new[] { "table" };
 
                 case "th":
                 case "td":
-                    return new string[] { "tr", "table" };
+                    return new[] { "tr", "table" };
 
                 default:
                     return null;
@@ -1688,12 +1666,7 @@ namespace HtmlAgilityPack
             _currentattribute._valuelength = index - _currentattribute._valuestartindex;
         }
 
-        private void PushAttributeValueStart(int index)
-        {
-            PushAttributeValueStart(index, 0);
-        }
-
-        private void PushAttributeValueStart(int index, int quote)
+        private void PushAttributeValueStart(int index, int quote = 0)
         {
             _currentattribute._valuestartindex = index;
             if (quote == '\'')

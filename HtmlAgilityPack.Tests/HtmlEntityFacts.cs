@@ -5,7 +5,7 @@
     public class HtmlEntityFacts
     {
         [Fact]
-        public void DeEntitizeDoesNotThrowExceptionIfEntitynameNotFound()
+        public void DeEntitizeDoesNotThrowExceptionIfEntityNameNotFound()
         {
             string deEntitize = null;
             Assert.DoesNotThrow(() =>

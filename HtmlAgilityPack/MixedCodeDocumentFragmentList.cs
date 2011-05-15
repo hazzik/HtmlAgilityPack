@@ -12,8 +12,8 @@ namespace HtmlAgilityPack
     {
         #region Fields
 
-        private MixedCodeDocument _doc;
-        private IList<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
+        private readonly MixedCodeDocument _doc;
+        private readonly IList<MixedCodeDocumentFragment> _items = new List<MixedCodeDocumentFragment>();
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace HtmlAgilityPack
         /// </summary>
         public MixedCodeDocumentFragment this[int index]
         {
-            get { return _items[index] as MixedCodeDocumentFragment; }
+            get { return _items[index]; }
         }
 
         #endregion
@@ -147,7 +147,7 @@ namespace HtmlAgilityPack
             _items.Clear();
         }
 
-        internal int GetFragmentIndex(MixedCodeDocumentFragment fragment)
+        private int GetFragmentIndex(MixedCodeDocumentFragment fragment)
         {
             if (fragment == null)
             {
@@ -175,7 +175,7 @@ namespace HtmlAgilityPack
             #region Fields
 
             private int _index;
-            private IList<MixedCodeDocumentFragment> _items;
+            private readonly IList<MixedCodeDocumentFragment> _items;
 
             #endregion
 
@@ -196,7 +196,7 @@ namespace HtmlAgilityPack
             /// </summary>
             public MixedCodeDocumentFragment Current
             {
-                get { return (MixedCodeDocumentFragment) (_items[_index]); }
+                get { return _items[_index]; }
             }
 
             #endregion

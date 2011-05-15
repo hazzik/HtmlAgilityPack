@@ -1,48 +1,37 @@
 // HtmlAgilityPack V1.0 - Simon Mourier <simon underscore mourier at hotmail dot com>
 
-#region
-
 using System;
 using System.Diagnostics;
 
-#endregion
 // ReSharper disable InconsistentNaming
 
 namespace HtmlAgilityPack
 {
+    using System.Linq;
+
     /// <summary>
     /// Represents an HTML attribute.
     /// </summary>
     [DebuggerDisplay("Name: {OriginalName}, Value: {Value}")]
     public class HtmlAttribute : IComparable
     {
-        #region Fields
-
         private int _line;
         internal int _lineposition;
-        internal string _name;
+        private string _name;
         internal int _namelength;
         internal int _namestartindex;
-        internal HtmlDocument _ownerdocument; // attribute can exists without a node
+        private readonly HtmlDocument _ownerdocument; // attribute can exists without a node
         internal HtmlNode _ownernode;
         private AttributeValueQuote _quoteType = AttributeValueQuote.DoubleQuote;
         internal int _streamposition;
-        internal string _value;
+        private string _value;
         internal int _valuelength;
         internal int _valuestartindex;
-
-        #endregion
-
-        #region Constructors
 
         internal HtmlAttribute(HtmlDocument ownerdocument)
         {
             _ownerdocument = ownerdocument;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the line number of this attribute in the document.
@@ -176,8 +165,6 @@ namespace HtmlAgilityPack
             }
         }
 
-        #endregion
-
         #region IComparable Members
 
         /// <summary>
@@ -187,7 +174,7 @@ namespace HtmlAgilityPack
         /// <returns>A 32-bit signed integer that indicates the relative order of the names comparison.</returns>
         public int CompareTo(object obj)
         {
-            HtmlAttribute att = obj as HtmlAttribute;
+            var att = obj as HtmlAttribute;
             if (att == null)
             {
                 throw new ArgumentException("obj");
@@ -205,10 +192,7 @@ namespace HtmlAgilityPack
         /// <returns>The cloned attribute.</returns>
         public HtmlAttribute Clone()
         {
-            HtmlAttribute att = new HtmlAttribute(_ownerdocument);
-            att.Name = Name;
-            att.Value = Value;
-            return att;
+            return new HtmlAttribute(_ownerdocument) {Name = Name, Value = Value};
         }
 
         /// <summary>
@@ -228,17 +212,8 @@ namespace HtmlAgilityPack
             if (OwnerNode == null)
                 return Name;
 
-            int i = 1;
-            foreach (HtmlAttribute node in OwnerNode.Attributes)
-            {
-                if (node.Name != Name) continue;
-
-                if (node == this)
-                    break;
-
-                i++;
-            }
-            return "@" + Name + "[" + i + "]";
+            int i = 1 + OwnerNode.Attributes.Where(node => node.Name == Name).TakeWhile(node => node != this).Count();
+            return string.Format("@{0}[{1}]", Name, i);
         }
 
         #endregion
