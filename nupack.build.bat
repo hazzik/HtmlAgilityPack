@@ -1,1 +1,1 @@
-nuget pack htmlagilitypack.nuspec -b Nuget\ -o ./
+nuget pack Nuget\htmlagilitypack.nuspec -b Nuget\ -o ./

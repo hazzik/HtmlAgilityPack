@@ -45,6 +45,7 @@
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>Bin\Release\HtmlAgilityPack.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
@@ -73,6 +74,9 @@
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
       <Link>HtmlDocument.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.Xpath.cs">
+      <Link>HtmlDocument.Xpath.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
       <Link>HtmlElementFlag.cs</Link>
     </Compile>
@@ -84,6 +88,9 @@
     </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlNode.cs">
       <Link>HtmlNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlNode.Xpath.cs">
+      <Link>HtmlNode.Xpath.cs</Link>
     </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlNodeCollection.cs">
       <Link>HtmlNodeCollection.cs</Link>
