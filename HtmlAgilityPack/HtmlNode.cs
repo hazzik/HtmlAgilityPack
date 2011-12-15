@@ -300,24 +300,20 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_ownerdocument.Nodesid == null)
-                {
-                    throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
-                }
-                return GetId();
+            	if (_ownerdocument.Nodesid == null)
+            		throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
+
+            	return GetId();
             }
             set
             {
-                if (_ownerdocument.Nodesid == null)
-                {
-                    throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
-                }
+            	if (_ownerdocument.Nodesid == null)
+            		throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
 
-                if (value == null)
-                {
-                    throw new ArgumentNullException("value");
-                }
-                SetId(value);
+            	if (value == null)
+            		throw new ArgumentNullException("value");
+
+            	SetId(value);
             }
         }
 
@@ -334,17 +330,14 @@ namespace HtmlAgilityPack
                     _innerchanged = false;
                     return _innerhtml;
                 }
-                if (_innerhtml != null)
-                {
-                    return _innerhtml;
-                }
 
-                if (_innerstartindex < 0)
-                {
-                    return string.Empty;
-                }
+            	if (_innerhtml != null)
+            		return _innerhtml;
 
-                return _ownerdocument.Text.Substring(_innerstartindex, _innerlength);
+            	if (_innerstartindex < 0)
+            		return string.Empty;
+
+            	return _ownerdocument.Text.Substring(_innerstartindex, _innerlength);
             }
             set
             {
@@ -363,29 +356,21 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_nodetype == HtmlNodeType.Text)
-                {
-                    return ((HtmlTextNode) this).Text;
-                }
+            	if (_nodetype == HtmlNodeType.Text)
+            		return ((HtmlTextNode) this).Text;
 
-                if (_nodetype == HtmlNodeType.Comment)
-                {
-                    return ((HtmlCommentNode) this).Comment;
-                }
+            	if (_nodetype == HtmlNodeType.Comment)
+            		return ((HtmlCommentNode) this).Comment;
 
-                // note: right now, this method is *slow*, because we recompute everything.
-                // it could be optimised like innerhtml
-                if (!HasChildNodes)
-                {
-                    return string.Empty;
-                }
+            	// note: right now, this method is *slow*, because we recompute everything.
+                // it could be optimized like innerhtml
+            	if (!HasChildNodes)
+            		return string.Empty;
 
-                string s = null;
-                foreach (HtmlNode node in ChildNodes)
-                {
-                    s += node.InnerText;
-                }
-                return s;
+            	string s = null;
+            	foreach (HtmlNode node in ChildNodes)
+            		s += node.InnerText;
+            	return s;
             }
         }
 

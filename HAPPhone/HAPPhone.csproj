@@ -42,13 +42,6 @@
     <DocumentationFile>Bin\Release\HtmlAgilityPack.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System.Windows" />
-    <Reference Include="system" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Net" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\HAPLight\HtmlDocumentLoadCompleted.cs">
       <Link>HtmlDocumentLoadCompleted.cs</Link>
     </Compile>
@@ -136,17 +129,31 @@
     <Compile Include="..\HtmlAgilityPack\NameValuePairList.cs">
       <Link>NameValuePairList.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\Trace.cs">
       <Link>Trace.cs</Link>
     </Compile>
     <Compile Include="..\HtmlAgilityPack\Utilities.cs">
       <Link>Utilities.cs</Link>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q "$(SolutionDir)Nuget\lib\sl3-wp\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)Nuget\lib\sl3-wp\"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

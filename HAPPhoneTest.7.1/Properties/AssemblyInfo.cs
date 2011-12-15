@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HAPPhone")]
+[assembly: AssemblyTitle("HAPPhoneTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("HAPPhone")]
+[assembly: AssemblyProduct("HAPPhoneTest")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("46dc0b9c-c8ad-4597-a698-cd6b17509086")]
+[assembly: Guid("33353d37-0bc3-465b-a588-143516f355ef")]
 
 // Version information for an assembly consists of the following four values:
 //

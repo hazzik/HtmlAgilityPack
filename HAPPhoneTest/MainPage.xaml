@@ -22,15 +22,15 @@
 
 		<!--TitlePanel contains the name of the application and page title-->
 		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-			<TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-			<TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+			<TextBlock x:Name="ApplicationTitle" Text="HAPPhone Example" Style="{StaticResource PhoneTextNormalStyle}"/>
 		</StackPanel>
 
 		<!--ContentPanel - place additional content here-->
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
 			<StackPanel>
 				<Button Height="100" Click="FetchSite" Content="Fetch"></Button>
-				<TextBlock x:Name="Results">asdf asdf</TextBlock>
+				<TextBlock x:Name="Results"
+					Text="">asdf asdf</TextBlock>
 			</StackPanel>
 		</Grid>
 	</Grid>
