@@ -9,6 +9,8 @@ namespace HtmlAgilityPack.Tests
 	public class HtmlDocumentTests
 	{
 		private string _contentDirectory;
+		
+	
 
 		[TestFixtureSetUp]
 		public void Setup()
@@ -22,6 +24,7 @@ namespace HtmlAgilityPack.Tests
 			doc.Load(_contentDirectory + "mshome.htm");
 			return doc;
 		}
+
 		[Test]
 		public void StackOverflow()
 		{

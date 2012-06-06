@@ -78,7 +78,6 @@
     <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlElementFlag.cs" />
     <Compile Include="HtmlNameTable.cs" />
-    <Compile Include="HtmlNode.Dynamic.cs" />
     <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
     <Compile Include="HtmlNodeType.cs" />
@@ -134,4 +133,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net40\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net40\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

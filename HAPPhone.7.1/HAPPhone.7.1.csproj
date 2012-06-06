@@ -163,8 +163,8 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q "$(SolutionDir)Nuget\lib\sl4-windowsphone71\*"
-copy "$(TargetDir)Html*.*" "$(SolutionDir)Nuget\lib\sl4-windowsphone71\"</PostBuildEvent>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\sl4-windowsphone71\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\sl4-windowsphone71\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

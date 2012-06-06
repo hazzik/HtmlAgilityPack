@@ -3,48 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{AFD07A75-912E-4F74-BE5B-E6F21EE93B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "..\HtmlAgilityPack\HtmlAgilityPack.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDocLinks VS2008", "GetDocLinks\GetDocLinks VS2008.csproj", "{EA9372AB-8795-414A-B897-F777A8833CF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetDocLinks VS2008", "..\GetDocLinks\GetDocLinks VS2008.csproj", "{EA9372AB-8795-414A-B897-F777A8833CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Txt VS2008", "Html2Txt\Html2Txt VS2008.csproj", "{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Txt VS2008", "..\Html2Txt\Html2Txt VS2008.csproj", "{2DCBCC12-1B62-4CEC-B8AD-7D5DC7E5AC38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Xml VS2008", "Html2Xml\Html2Xml VS2008.csproj", "{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Xml VS2008", "..\Html2Xml\Html2Xml VS2008.csproj", "{989D16BD-ED2A-47FA-BBB6-D1267892A3F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Rss VS2008", "Html2Rss\Html2Rss VS2008.csproj", "{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Html2Rss VS2008", "..\Html2Rss\Html2Rss VS2008.csproj", "{0BFCEF0A-C1A3-4187-A8E5-D7E1DFD0EB95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPExplorer", "HAPExplorer\HAPExplorer.csproj", "{F18CBB28-42E9-4373-8CDF-0B050E1181DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPExplorer", "..\HAPExplorer\HAPExplorer.csproj", "{F18CBB28-42E9-4373-8CDF-0B050E1181DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPLight", "HAPLight\HAPLight.csproj", "{5C9BCD7F-531E-4353-B430-C00381B55D29}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Tests", "HtmlAgilityPack.Tests\HtmlAgilityPack.Tests.csproj", "{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Tests", "..\HtmlAgilityPack.Tests\HtmlAgilityPack.Tests.csproj", "{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccProjectUniqueName0 = HtmlAgilityPack\\HtmlAgilityPack\u0020VS2008.csproj
-		SccProjectName0 = HtmlAgilityPack
-		SccLocalPath0 = HtmlAgilityPack
-		SccProjectUniqueName1 = Html2Txt\\Html2Txt\u0020VS2008.csproj
-		SccProjectTopLevelParentUniqueName1 = HtmlAgilityPack\u0020VS2008.sln
-		SccProjectName1 = Html2Txt
-		SccLocalPath1 = Html2Txt
-		SccProjectUniqueName2 = Html2Xml\\Html2Xml\u0020VS2008.csproj
-		SccProjectTopLevelParentUniqueName2 = HtmlAgilityPack\u0020VS2008.sln
-		SccProjectName2 = Html2Xml
-		SccLocalPath2 = Html2Xml
-		SccProjectUniqueName3 = Html2Rss\\Html2Rss\u0020VS2008.csproj
-		SccProjectTopLevelParentUniqueName3 = HtmlAgilityPack\u0020VS2008.sln
-		SccProjectName3 = Html2Rss
-		SccLocalPath3 = Html2Rss
-		SccProjectUniqueName4 = GetDocLinks\\GetDocLinks\u0020VS2008.csproj
-		SccProjectTopLevelParentUniqueName4 = HtmlAgilityPack\u0020VS2008.sln
-		SccProjectName4 = GetDocLinks
-		SccLocalPath4 = GetDocLinks
-		SccLocalPath5 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -114,16 +87,6 @@ Global
 		{F18CBB28-42E9-4373-8CDF-0B050E1181DF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F18CBB28-42E9-4373-8CDF-0B050E1181DF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F18CBB28-42E9-4373-8CDF-0B050E1181DF}.Release|x86.ActiveCfg = Release|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5C9BCD7F-531E-4353-B430-C00381B55D29}.Release|x86.ActiveCfg = Release|Any CPU
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD049DC9-C2CA-4D87-AAD4-875C004C0EC5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

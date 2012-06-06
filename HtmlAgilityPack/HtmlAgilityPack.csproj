@@ -133,7 +133,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q $(SolutionDir)Nuget\lib\*
-copy "$(TargetDir)Html*.*" $(SolutionDir)Nuget\lib\</PostBuildEvent>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net20\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net20\</PostBuildEvent>
   </PropertyGroup>
 </Project>
