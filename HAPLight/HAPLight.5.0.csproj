@@ -74,6 +74,9 @@
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
       <Link>HtmlDocument.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.PathMethods.cs">
+      <Link>HtmlDocument.PathMethods.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.Xpath.cs">
       <Link>HtmlDocument.Xpath.cs</Link>
     </Compile>

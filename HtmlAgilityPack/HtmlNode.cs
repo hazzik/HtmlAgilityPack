@@ -1440,7 +1440,7 @@ namespace HtmlAgilityPack
 				case HtmlNodeType.Document:
 					if (_ownerdocument.OptionOutputAsXml)
 					{
-#if SILVERLIGHT || PocketPC
+#if SILVERLIGHT || PocketPC || METRO
 						outText.Write("<?xml version=\"1.0\" encoding=\"" + _ownerdocument.GetOutEncoding().WebName +
 									 "\"?>");
 #else
@@ -1572,7 +1572,7 @@ namespace HtmlAgilityPack
 					break;
 
 				case HtmlNodeType.Document:
-					#if SILVERLIGHT || PocketPC
+					#if SILVERLIGHT || PocketPC || METRO
 						writer.WriteProcessingInstruction("xml",
 													  "version=\"1.0\" encoding=\"" +
 													  _ownerdocument.GetOutEncoding().WebName + "\"");

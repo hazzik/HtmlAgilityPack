@@ -74,6 +74,7 @@
     <Compile Include="HtmlAttributeCollection.cs" />
     <Compile Include="HtmlCommentNode.cs" />
     <Compile Include="HtmlConsoleListener.cs" />
+    <Compile Include="HtmlDocument.PathMethods.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlElementFlag.cs" />
     <Compile Include="HtmlNameTable.cs" />

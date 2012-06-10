@@ -147,8 +147,8 @@ namespace HtmlAgilityPack
 		public HtmlDocument()
 		{
 			_documentnode = CreateNode(HtmlNodeType.Document, 0);
-#if SILVERLIGHT
-			OptionDefaultStreamEncoding =Encoding.UTF8;
+#if SILVERLIGHT || METRO
+            OptionDefaultStreamEncoding =Encoding.UTF8;
 #else
 			OptionDefaultStreamEncoding = Encoding.Default;
 #endif
@@ -225,12 +225,6 @@ namespace HtmlAgilityPack
 		{
 			get { return _streamencoding; }
 		}
-
-		#endregion
-
-		#region IXPathNavigable Members
-
-
 
 		#endregion
 
@@ -416,22 +410,7 @@ namespace HtmlAgilityPack
 			return DetectEncoding(new StreamReader(stream));
 		}
 
-		/// <summary>
-		/// Detects the encoding of an HTML file.
-		/// </summary>
-		/// <param name="path">Path for the file containing the HTML document to detect. May not be null.</param>
-		/// <returns>The detected encoding.</returns>
-		public Encoding DetectEncoding(string path)
-		{
-			if (path == null)
-			{
-				throw new ArgumentNullException("path");
-			}
-			StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding);
-			Encoding encoding = DetectEncoding(sr);
-			sr.Close();
-			return encoding;
-		}
+
 
 		/// <summary>
 		/// Detects the encoding of an HTML text provided on a TextReader.
@@ -489,45 +468,9 @@ namespace HtmlAgilityPack
 			return null;
 		}
 
-		/// <summary>
-		/// Detects the encoding of an HTML document from a file first, and then loads the file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read.</param>
-		public void DetectEncodingAndLoad(string path)
-		{
-			DetectEncodingAndLoad(path, true);
-		}
 
-		/// <summary>
-		/// Detects the encoding of an HTML document from a file first, and then loads the file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		/// <param name="detectEncoding">true to detect encoding, false otherwise.</param>
-		public void DetectEncodingAndLoad(string path, bool detectEncoding)
-		{
-			if (path == null)
-			{
-				throw new ArgumentNullException("path");
-			}
-			Encoding enc;
-			if (detectEncoding)
-			{
-				enc = DetectEncoding(path);
-			}
-			else
-			{
-				enc = null;
-			}
 
-			if (enc == null)
-			{
-				Load(path);
-			}
-			else
-			{
-				Load(path, enc);
-			}
-		}
+		
 
 		/// <summary>
 		/// Detects the encoding of an HTML text.
@@ -540,10 +483,11 @@ namespace HtmlAgilityPack
 			{
 				throw new ArgumentNullException("html");
 			}
-			StringReader sr = new StringReader(html);
-			Encoding encoding = DetectEncoding(sr);
-			sr.Close();
-			return encoding;
+			using(StringReader sr = new StringReader(html))
+			{
+			    Encoding encoding = DetectEncoding(sr);
+                return encoding;
+			}
 		}
 
 		/// <summary>
@@ -616,91 +560,6 @@ namespace HtmlAgilityPack
 			Load(new StreamReader(stream, encoding, detectEncodingFromByteOrderMarks, buffersize));
 		}
 
-		/// <summary>
-		/// Loads an HTML document from a file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		public void Load(string path)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			StreamReader sr = new StreamReader(path, OptionDefaultStreamEncoding);
-			Load(sr);
-			sr.Close();
-		}
-
-		/// <summary>
-		/// Loads an HTML document from a file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		/// <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
-		public void Load(string path, bool detectEncodingFromByteOrderMarks)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			StreamReader sr = new StreamReader(path, detectEncodingFromByteOrderMarks);
-			Load(sr);
-			sr.Close();
-		}
-
-		/// <summary>
-		/// Loads an HTML document from a file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		/// <param name="encoding">The character encoding to use. May not be null.</param>
-		public void Load(string path, Encoding encoding)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			if (encoding == null)
-				throw new ArgumentNullException("encoding");
-
-			StreamReader sr = new StreamReader(path, encoding);
-			Load(sr);
-			sr.Close();
-		}
-
-		/// <summary>
-		/// Loads an HTML document from a file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		/// <param name="encoding">The character encoding to use. May not be null.</param>
-		/// <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
-		public void Load(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			if (encoding == null)
-				throw new ArgumentNullException("encoding");
-
-			StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks);
-			Load(sr);
-			sr.Close();
-		}
-
-		/// <summary>
-		/// Loads an HTML document from a file.
-		/// </summary>
-		/// <param name="path">The complete file path to be read. May not be null.</param>
-		/// <param name="encoding">The character encoding to use. May not be null.</param>
-		/// <param name="detectEncodingFromByteOrderMarks">Indicates whether to look for byte order marks at the beginning of the file.</param>
-		/// <param name="buffersize">The minimum buffer size.</param>
-		public void Load(string path, Encoding encoding, bool detectEncodingFromByteOrderMarks, int buffersize)
-		{
-			if (path == null)
-				throw new ArgumentNullException("path");
-
-			if (encoding == null)
-				throw new ArgumentNullException("encoding");
-
-			StreamReader sr = new StreamReader(path, encoding, detectEncodingFromByteOrderMarks, buffersize);
-			Load(sr);
-			sr.Close();
-		}
 
 		/// <summary>
 		/// Loads the HTML document from the specified TextReader.
@@ -796,9 +655,10 @@ namespace HtmlAgilityPack
 			{
 				throw new ArgumentNullException("html");
 			}
-			StringReader sr = new StringReader(html);
-			Load(sr);
-			sr.Close();
+            using (StringReader sr = new StringReader(html))
+            {
+                Load(sr);
+            }
 		}
 
 		/// <summary>
@@ -830,36 +690,6 @@ namespace HtmlAgilityPack
 			Save(sw);
 		}
 
-		/// <summary>
-		/// Saves the mixed document to the specified file.
-		/// </summary>
-		/// <param name="filename">The location of the file where you want to save the document.</param>
-		public void Save(string filename)
-		{
-			StreamWriter sw = new StreamWriter(filename, false, GetOutEncoding());
-			Save(sw);
-			sw.Close();
-		}
-
-		/// <summary>
-		/// Saves the mixed document to the specified file.
-		/// </summary>
-		/// <param name="filename">The location of the file where you want to save the document. May not be null.</param>
-		/// <param name="encoding">The character encoding to use. May not be null.</param>
-		public void Save(string filename, Encoding encoding)
-		{
-			if (filename == null)
-			{
-				throw new ArgumentNullException("filename");
-			}
-			if (encoding == null)
-			{
-				throw new ArgumentNullException("encoding");
-			}
-			StreamWriter sw = new StreamWriter(filename, false, encoding);
-			Save(sw);
-			sw.Close();
-		}
 
 		/// <summary>
 		/// Saves the HTML document to the specified StreamWriter.
@@ -1841,7 +1671,7 @@ namespace HtmlAgilityPack
 
 					if (_streamencoding != null)
 					{
-#if SILVERLIGHT || PocketPC
+#if SILVERLIGHT || PocketPC || METRO
 						if (_declaredencoding.WebName != _streamencoding.WebName)
 #else
 						if (_declaredencoding != null)
