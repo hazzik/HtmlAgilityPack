@@ -58,8 +58,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\fx.4.0\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>FX40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\fx.4.0\Release\HtmlAgilityPack.XML</DocumentationFile>

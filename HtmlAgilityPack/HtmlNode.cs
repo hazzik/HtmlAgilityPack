@@ -35,6 +35,7 @@ namespace HtmlAgilityPack
 		internal string _outerhtml;
 		internal int _outerlength;
 		internal int _outerstartindex;
+        private string _optimizedName;
 		internal HtmlDocument _ownerdocument;
 		internal HtmlNode _parentnode;
 		internal HtmlNode _prevnode;
@@ -403,21 +404,27 @@ namespace HtmlAgilityPack
 			internal set { _lineposition = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets this node's name.
-		/// </summary>
-		public string Name
-		{
-			get
-			{
-				if (_name == null)
-				{
-					Name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
-				}
-				return _name != null ? _name.ToLower() : string.Empty;
-			}
-			set { _name = value; }
-		}
+        /// <summary>
+        /// Gets or sets this node's name.
+        /// </summary>
+        public string Name
+        {
+            get
+            {
+                if (_optimizedName == null)
+                {
+                    if (_name == null)                    
+                        Name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
+
+                    if (_name == null)
+                        _optimizedName = string.Empty;
+                    else
+                        _optimizedName = _name.ToLower();
+                }
+                return _optimizedName;
+            }
+            set { _name = value; _optimizedName = null; }
+        }
 
 		/// <summary>
 		/// Gets the HTML node immediately following this element.

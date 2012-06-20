@@ -711,6 +711,7 @@ namespace HtmlAgilityPack
 				throw new ArgumentNullException("writer");
 			}
 			DocumentNode.WriteTo(writer);
+            writer.Flush();
 		}
 
 		/// <summary>

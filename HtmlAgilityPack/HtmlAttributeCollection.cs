@@ -40,7 +40,8 @@ namespace HtmlAgilityPack
                 {
                     throw new ArgumentNullException("name");
                 }
-                return Hashitems.ContainsKey(name.ToLower()) ? Hashitems[name.ToLower()] : null;
+                HtmlAttribute value;
+                return Hashitems.TryGetValue(name.ToLower(), out value) ? value : null;
             }
             set { Append(value); }
         }

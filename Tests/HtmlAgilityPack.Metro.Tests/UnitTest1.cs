@@ -13,8 +13,8 @@ namespace HtmlAgilityPack.Metro.Tests
         public async void TestHtmlWebBasicCall()
         {
             var html = new HtmlWeb();
-            await html.LoadFromWebAsync("http://www.google.com");
-
+            var doc = await html.LoadFromWebAsync("http://www.google.com");
+            Assert.IsNotNull(doc);
         }
     }
 }

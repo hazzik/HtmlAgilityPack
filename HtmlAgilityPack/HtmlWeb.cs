@@ -874,13 +874,13 @@ namespace HtmlAgilityPack
 		/// <returns>The path extension's MIME content type.</returns>
 		public static string GetContentTypeForExtension(string extension, string def)
 		{
+		    var helper = new PermissionHelper();
 			if (string.IsNullOrEmpty(extension))
 			{
 				return def;
 			}
 			string contentType = "";
-
-			if (!SecurityManager.IsGranted(new RegistryPermission(PermissionState.Unrestricted)))
+			if (!helper.GetIsRegistryAvailable())
 			{
 				if (MimeTypes.ContainsKey(extension))
 					contentType = MimeTypes[extension];
@@ -888,7 +888,7 @@ namespace HtmlAgilityPack
 					contentType = def;
 			}
 
-			if (!SecurityManager.IsGranted(new DnsPermission(PermissionState.Unrestricted)))
+			if (!helper.GetIsDnsAvailable())
 			{
 				//do something.... not at full trust
 				try
@@ -913,12 +913,14 @@ namespace HtmlAgilityPack
 		/// <returns>The MIME content type's path extension.</returns>
 		public static string GetExtensionForContentType(string contentType, string def)
 		{
+            var helper = new PermissionHelper();
+
 			if (string.IsNullOrEmpty(contentType))
 			{
 				return def;
 			}
 			string ext = "";
-			if (!SecurityManager.IsGranted(new RegistryPermission(PermissionState.Unrestricted)))
+			if (!helper.GetIsRegistryAvailable())
 			{
 				if (MimeTypes.ContainsValue(contentType))
 				{
@@ -929,7 +931,7 @@ namespace HtmlAgilityPack
 				return def;
 			}
 
-			if (SecurityManager.IsGranted(new RegistryPermission(PermissionState.Unrestricted)))
+			if (helper.GetIsRegistryAvailable())
 			{
 				try
 				{
@@ -1504,4 +1506,59 @@ namespace HtmlAgilityPack
 		#endregion
 
 	}
+    /// <summary>
+    /// Wraps getting AppDomain permissions
+    /// </summary>
+    public class PermissionHelper:IPermissionHelper
+    {
+        /// <summary>
+        /// Checks to see if Registry access is available to the caller
+        /// </summary>
+        /// <returns></returns>
+        public bool GetIsRegistryAvailable()
+        {
+#if FX40
+            var permissionSet = new PermissionSet(PermissionState.None);    
+            var writePermission = new RegistryPermission( PermissionState.Unrestricted);
+            permissionSet.AddPermission(writePermission);
+
+            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+#else
+            return SecurityManager.IsGranted(new RegistryPermission(PermissionState.Unrestricted));
+#endif
+        }
+        /// <summary>
+        /// Checks to see if DNS information is available to the caller
+        /// </summary>
+        /// <returns></returns>
+        public bool GetIsDnsAvailable()
+        {
+#if FX40
+            var permissionSet = new PermissionSet(PermissionState.None);    
+            var writePermission = new DnsPermission(PermissionState.Unrestricted);
+            permissionSet.AddPermission(writePermission);
+
+            return permissionSet.IsSubsetOf(AppDomain.CurrentDomain.PermissionSet);
+#else
+			return SecurityManager.IsGranted(new DnsPermission(PermissionState.Unrestricted));
+#endif
+        }
+    }
+    /// <summary>
+    /// An interface for getting permissions of the running application
+    /// </summary>
+    public interface IPermissionHelper
+    {
+        /// <summary>
+        /// Checks to see if Registry access is available to the caller
+        /// </summary>
+        /// <returns></returns>
+        bool GetIsRegistryAvailable();
+
+        /// <summary>
+        /// Checks to see if DNS information is available to the caller
+        /// </summary>
+        /// <returns></returns>
+        bool GetIsDnsAvailable();
+    }
 }
