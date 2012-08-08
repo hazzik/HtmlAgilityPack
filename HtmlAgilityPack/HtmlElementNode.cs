@@ -24,7 +24,7 @@ namespace HtmlAgilityPack
 
             if (_ownerdocument.OptionOutputAsXml)
             {
-                if (string.IsNullOrWhiteSpace(name))
+                if (string.IsNullOrEmpty(name) || name.Trim() == string.Empty)
                     return;
 
                 if (name[0] == '?')
