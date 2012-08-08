@@ -167,12 +167,16 @@ namespace HtmlAgilityPack
         #endregion
 
         #region Public Static Methods
-
-        public static void LoadAsync(string path, EventHandler<HtmlDocumentLoadCompleted> callback)
+        /// <summary>
+        /// Retrieves an HtmlDocument using the provided url
+        /// </summary>
+        /// <param name="url">The address to load</param>
+        /// <param name="callback"></param>
+        public static void LoadAsync(string url, EventHandler<HtmlDocumentLoadCompleted> callback)
         {
             var web = new HtmlWeb();
             web.LoadCompleted += callback;
-            web.LoadAsync(path);
+            web.LoadAsync(url);
         }
 
         #endregion

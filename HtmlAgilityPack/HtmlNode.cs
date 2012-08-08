@@ -36,8 +36,9 @@ namespace HtmlAgilityPack
         internal bool _outerchanged;
         private string _outerhtml;
         internal int _outerlength;
-        internal readonly int _outerstartindex;
-        internal readonly HtmlDocument _ownerdocument;
+		internal int _outerstartindex;
+        private string _optimizedName;
+		internal HtmlDocument _ownerdocument;
         internal HtmlNode _parentnode;
         internal HtmlNode _prevnode;
         internal HtmlNode _prevwithsamename;
@@ -237,8 +238,8 @@ namespace HtmlAgilityPack
                 }
 
                 return _attributes.Any();
-            }
-        }
+				}
+			}
 
         /// <summary>
         /// Gets a value indicating whether this node has any child nodes.
@@ -285,22 +286,18 @@ namespace HtmlAgilityPack
             get
             {
                 if (_ownerdocument.Nodesid == null)
-                {
                     throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
-                }
+
                 return GetId();
             }
             set
             {
                 if (_ownerdocument.Nodesid == null)
-                {
                     throw new Exception(HtmlDocument.HtmlExceptionUseIdAttributeFalse);
-                }
 
                 if (value == null)
-                {
                     throw new ArgumentNullException("value");
-                }
+
                 SetId(value);
             }
         }
@@ -318,15 +315,12 @@ namespace HtmlAgilityPack
                     _innerchanged = false;
                     return _innerhtml;
                 }
+
                 if (_innerhtml != null)
-                {
                     return _innerhtml;
-                }
 
                 if (_innerstartindex < 0)
-                {
                     return string.Empty;
-                }
 
                 return _ownerdocument.Text.Substring(_innerstartindex, _innerlength);
             }
@@ -381,13 +375,19 @@ namespace HtmlAgilityPack
         {
             get
             {
-                if (_name == null)
+                if (_optimizedName == null)
                 {
+                    if (_name == null)                    
                     Name = _ownerdocument.Text.Substring(_namestartindex, _namelength);
+
+                    if (_name == null)
+                        _optimizedName = string.Empty;
+                    else
+                        _optimizedName = _name.ToLower();
                 }
-                return _name != null ? _name.ToLower() : string.Empty;
+                return _optimizedName;
             }
-            set { _name = value; }
+            set { _name = value; _optimizedName = null; }
         }
 
         /// <summary>
@@ -816,6 +816,7 @@ namespace HtmlAgilityPack
         /// Gets all Descendant nodes for this node and each of child nodes
         /// </summary>
         /// <returns></returns>
+		[Obsolete("Use Descendants() instead, the results of this function will change in a future version")]
         public IEnumerable<HtmlNode> DescendantNodes()
         {
             foreach (HtmlNode node in ChildNodes)
@@ -830,6 +831,7 @@ namespace HtmlAgilityPack
         /// Returns a collection of all descendant nodes of this element, in document order
         /// </summary>
         /// <returns></returns>
+		[Obsolete("Use DescendantsAndSelf() instead, the results of this function will change in a future version")]
         public IEnumerable<HtmlNode> DescendantNodesAndSelf()
         {
             return DescendantsAndSelf();
@@ -841,7 +843,12 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlNode> Descendants()
         {
-            return DescendantNodes();
+            foreach (HtmlNode node in ChildNodes)
+            {
+                yield return node;
+                foreach (HtmlNode descendant in node.Descendants())
+                    yield return descendant;
+            }
         }
 
         /// <summary>
@@ -851,6 +858,7 @@ namespace HtmlAgilityPack
         /// <returns></returns>
         public IEnumerable<HtmlNode> Descendants(string name)
         {
+			name = name.ToLowerInvariant();
             return Descendants().Where(node => node.Name == name);
         }
 
@@ -874,7 +882,7 @@ namespace HtmlAgilityPack
         {
             yield return this;
             foreach (HtmlNode node in Descendants().Where(node => node.Name == name))
-                yield return node;
+					yield return node;
         }
 
         /// <summary>

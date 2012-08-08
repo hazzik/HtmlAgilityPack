@@ -58,8 +58,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\fx.4.0\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants>FX40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\fx.4.0\Release\HtmlAgilityPack.XML</DocumentationFile>
@@ -75,10 +74,10 @@
     <Compile Include="HtmlAttributeCollection.cs" />
     <Compile Include="HtmlCommentNode.cs" />
     <Compile Include="HtmlConsoleListener.cs" />
+    <Compile Include="HtmlDocument.PathMethods.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlElementFlag.cs" />
     <Compile Include="HtmlNameTable.cs" />
-    <Compile Include="HtmlNode.Dynamic.cs" />
     <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
     <Compile Include="HtmlNodeType.cs" />
@@ -134,4 +133,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net40\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net40\</PostBuildEvent>
+  </PropertyGroup>
 </Project>

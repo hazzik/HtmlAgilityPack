@@ -56,8 +56,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DynamicTests.cs" />
     <Compile Include="HtmlDocumentTests.cs" />
+    <Compile Include="NestedOptionsTests.cs" />
     <Compile Include="HtmlEntityFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,6 +68,9 @@
     <Content Include="mshome.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HtmlAgilityPack\HtmlAgilityPack.csproj">

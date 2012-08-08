@@ -75,6 +75,7 @@
     <Compile Include="HtmlAttributeCollection.cs" />
     <Compile Include="HtmlCommentNode.cs" />
     <Compile Include="HtmlConsoleListener.cs" />
+    <Compile Include="HtmlDocument.PathMethods.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
     <Compile Include="HtmlDocumentNode.cs" />
     <Compile Include="HtmlElementFlag.cs" />
@@ -137,7 +138,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q $(SolutionDir)Nuget\lib\*
-copy "$(TargetDir)Html*.*" $(SolutionDir)Nuget\lib\</PostBuildEvent>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net20\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net20\</PostBuildEvent>
   </PropertyGroup>
 </Project>

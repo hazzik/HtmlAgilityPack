@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.XPath;
-
+#pragma warning disable 0649
 namespace HtmlAgilityPack
 {
     /// <summary>
@@ -17,8 +17,8 @@ namespace HtmlAgilityPack
 
         private int _attindex;
         private HtmlNode _currentnode;
-        private HtmlDocument _doc = new HtmlDocument();
-        private HtmlNameTable _nametable = new HtmlNameTable();
+        private readonly HtmlDocument _doc = new HtmlDocument();
+        private readonly HtmlNameTable _nametable = new HtmlNameTable();
 
         internal bool Trace;
 

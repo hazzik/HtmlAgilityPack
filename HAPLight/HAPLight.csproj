@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Bin\Debug</OutputPath>
+    <OutputPath>Bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.cs">
       <Link>HtmlDocument.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocument.PathMethods.cs">
+      <Link>HtmlDocument.PathMethods.cs</Link>
     </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.Xpath.cs">
       <Link>HtmlDocument.Xpath.cs</Link>
@@ -167,8 +170,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>del /f /q "$(SolutionDir)Nuget\lib\Silverlight 4.0\*"
-copy "$(TargetDir)Html*.*" "$(SolutionDir)Nuget\lib\Silverlight 4.0\"</PostBuildEvent>
+    <PostBuildEvent>del /f /q "$(SolutionDir)..\Nuget\lib\sl4\*"
+copy "$(TargetDir)Html*.*" "$(SolutionDir)..\Nuget\lib\sl4\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
