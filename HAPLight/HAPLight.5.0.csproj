@@ -80,8 +80,17 @@
     <Compile Include="..\HtmlAgilityPack\HtmlDocument.Xpath.cs">
       <Link>HtmlDocument.Xpath.cs</Link>
     </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlDocumentNode.cs">
+      <Link>HtmlDocumentNode.cs</Link>
+    </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlElementFlag.cs">
       <Link>HtmlElementFlag.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementNode.cs">
+      <Link>HtmlElementNode.cs</Link>
+    </Compile>
+    <Compile Include="..\HtmlAgilityPack\HtmlElementNodeBase.cs">
+      <Link>HtmlElementNodeBase.cs</Link>
     </Compile>
     <Compile Include="..\HtmlAgilityPack\HtmlEntity.cs">
       <Link>HtmlEntity.cs</Link>

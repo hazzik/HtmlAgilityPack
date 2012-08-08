@@ -76,7 +76,10 @@
     <Compile Include="HtmlConsoleListener.cs" />
     <Compile Include="HtmlDocument.PathMethods.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
+    <Compile Include="HtmlDocumentNode.cs" />
     <Compile Include="HtmlElementFlag.cs" />
+    <Compile Include="HtmlElementNode.cs" />
+    <Compile Include="HtmlElementNodeBase.cs" />
     <Compile Include="HtmlNameTable.cs" />
     <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
@@ -131,9 +134,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1028002A-BBE2-4FF2-94B7-A8368A8F6887}</ProjectGuid>
+    <ProjectGuid>{180296FE-9624-4685-A596-3F092D8D2B20}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HtmlAgilityPack</RootNamespace>
@@ -78,7 +78,10 @@
     <Compile Include="HtmlConsoleListener.cs" />
     <Compile Include="HtmlDocument.PathMethods.cs" />
     <Compile Include="HtmlDocument.Xpath.cs" />
+    <Compile Include="HtmlDocumentNode.cs" />
     <Compile Include="HtmlElementFlag.cs" />
+    <Compile Include="HtmlElementNode.cs" />
+    <Compile Include="HtmlElementNodeBase.cs" />
     <Compile Include="HtmlNameTable.cs" />
     <Compile Include="HtmlNode.Xpath.cs" />
     <Compile Include="HtmlNodeCollection.cs" />
@@ -133,9 +136,6 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
