@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{180296FE-9624-4685-A596-3F092D8D2B20}</ProjectGuid>
+    <ProjectGuid>{1028002A-BBE2-4FF2-94B7-A8368A8F6887}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>HtmlAgilityPack</RootNamespace>
@@ -25,7 +25,7 @@
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -41,30 +41,28 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\fx.4.0\Debug\</OutputPath>
+    <OutputPath>bin\Debug\net40\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\fx.4.0\Debug\HtmlAgilityPack.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\net40\HtmlAgilityPack.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\fx.4.0\Release\</OutputPath>
+    <OutputPath>bin\Release\net40\</OutputPath>
     <DefineConstants>FX40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\fx.4.0\Release\HtmlAgilityPack.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\net40\HtmlAgilityPack.XML</DocumentationFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,7 +137,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net45\*
-copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net45\</PostBuildEvent>
+    <PostBuildEvent>del /f /q $(SolutionDir)..\Nuget\lib\Net40\*
+copy "$(TargetDir)Html*.*" $(SolutionDir)..\Nuget\lib\Net40\</PostBuildEvent>
   </PropertyGroup>
 </Project>
