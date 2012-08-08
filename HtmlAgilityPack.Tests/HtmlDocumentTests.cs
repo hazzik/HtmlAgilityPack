@@ -126,13 +126,13 @@ namespace HtmlAgilityPack.Tests
 		{
 			var doc = GetMshomeDocument();
 			var doc1desc =
-				doc.DocumentNode.DescendantNodes().Where(x => !string.IsNullOrWhiteSpace(x.InnerText)).ToList();
+				doc.DocumentNode.DescendantNodes().Where(x => !IsNullOrWhiteSpace(x.InnerText)).ToList();
 			doc.Save(_contentDirectory + "testsaveparse.html");
 
 			var doc2 = new HtmlDocument();
 			doc2.Load(_contentDirectory + "testsaveparse.html");
 			var doc2desc =
-				doc2.DocumentNode.DescendantNodes().Where(x => !string.IsNullOrWhiteSpace(x.InnerText)).ToList();
+				doc2.DocumentNode.DescendantNodes().Where(x => !IsNullOrWhiteSpace(x.InnerText)).ToList();
 			Assert.AreEqual(doc1desc.Count, doc2desc.Count);
 			//for(var i=0; i< doc1desc.Count;i++)
 			//{
@@ -146,7 +146,13 @@ namespace HtmlAgilityPack.Tests
 			//}
 		}
 
-		[Test]
+	    static bool IsNullOrWhiteSpace(string innerText)
+	    {
+            if (string.IsNullOrEmpty(innerText)) return true;
+	        return innerText.Trim() == string.Empty;
+	    }
+
+	    [Test]
 		public void TestRemoveUpdatesPreviousSibling()
 		{
 			var doc = GetMshomeDocument();
