@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPLight.5.0", "HAPLight\HA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.fx.4.5", "HtmlAgilityPack\HtmlAgilityPack.fx.4.5.csproj", "{180296FE-9624-4685-A596-3F092D8D2B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.fx.4.5-CP", "HtmlAgilityPack\HtmlAgilityPack.fx.4.5-CP.csproj", "{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -97,16 +95,6 @@ Global
 		{180296FE-9624-4685-A596-3F092D8D2B20}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{180296FE-9624-4685-A596-3F092D8D2B20}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{180296FE-9624-4685-A596-3F092D8D2B20}.Release|x86.ActiveCfg = Release|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{C0BF8D7C-B989-4ED8-B3FB-0D73FD033148}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
