@@ -1,6 +1,6 @@
 /*/obj/
 /*/bin/
-/_ReSharper.*/
+_ReSharper.*/
 *.suo
 *.user
 /Nuget/*

@@ -1,10 +1,11 @@
-﻿namespace HtmlAgilityPack.Tests
-{
-    using Xunit;
+﻿using NUnit.Framework;
 
+namespace HtmlAgilityPack.Tests
+{
+    [TestFixture]
     public class HtmlEntityFacts
     {
-        [Fact]
+        [Test]
         public void DeEntitizeDoesNotThrowExceptionIfEntityNameNotFound()
         {
             string deEntitize = null;
@@ -12,7 +13,7 @@
                                     {
                                         deEntitize = HtmlEntity.DeEntitize("&nbsp1;");
                                     });
-            Assert.Equal("&nbsp1;", deEntitize);
+            Assert.AreEqual("&nbsp1;", deEntitize);
         }
     }
 }

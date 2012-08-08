@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Metro", "..\HtmlAgilityPack.Metro\HtmlAgilityPack.Metro.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Metro", "HtmlAgilityPack.Metro\HtmlAgilityPack.Metro.csproj", "{193BB801-054F-4729-9D5D-FCE1E32594BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Metro.Tests", "..\Tests\HtmlAgilityPack.Metro.Tests\HtmlAgilityPack.Metro.Tests.csproj", "{23E8936B-727D-45A7-85C9-8F368846DC70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack.Metro.Tests", "Tests\HtmlAgilityPack.Metro.Tests\HtmlAgilityPack.Metro.Tests.csproj", "{23E8936B-727D-45A7-85C9-8F368846DC70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
